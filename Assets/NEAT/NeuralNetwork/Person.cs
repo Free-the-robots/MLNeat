@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -34,6 +34,11 @@ namespace NEAT
             {
                 connection.instantiate();
             }
+	}
+
+        public float similarities(Person person)
+        {
+            return 0f;
         }
     }
 }
