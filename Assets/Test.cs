@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
+    public NEAT.Person a;
+    public GameObject cube;
+
     // Start is called before the first frame update
     void Start()
     {
-        var watch = System.Diagnostics.Stopwatch.StartNew();
+        /*var watch = System.Diagnostics.Stopwatch.StartNew();
 
 
-        NEAT.Person a = new NEAT.Person();
+        a = (NEAT.Person)ScriptableObject.CreateInstance("NEAT.Person");
 
         NEAT.GENES.Node a1 = new NEAT.GENES.Node(NEAT.GENES.Node.NODE.IN, 0);
         NEAT.GENES.Node a2 = new NEAT.GENES.Node(NEAT.GENES.Node.NODE.IN, 1);
@@ -19,13 +22,13 @@ public class Test : MonoBehaviour
         NEAT.GENES.Node d1 = new NEAT.GENES.Node(NEAT.GENES.Node.NODE.OUT, 4);
         NEAT.GENES.Node d2 = new NEAT.GENES.Node(NEAT.GENES.Node.NODE.OUT, 5);
 
-        NEAT.GENES.Connection a1b1 = new NEAT.GENES.Connection(a1, b1, 0.5f);
-        NEAT.GENES.Connection a2b1 = new NEAT.GENES.Connection(a2, b1, 0.5f);
-        NEAT.GENES.Connection b1c1 = new NEAT.GENES.Connection(b1, c1, 0.5f);
-        NEAT.GENES.Connection c1d1 = new NEAT.GENES.Connection(c1, d1, 0.5f);
-        NEAT.GENES.Connection a1d1 = new NEAT.GENES.Connection(a1, d1, 0.5f);
-        NEAT.GENES.Connection c1d2 = new NEAT.GENES.Connection(c1, d2, 0.5f);
-        NEAT.GENES.Connection b1d2 = new NEAT.GENES.Connection(b1, d2, 0.2f);
+        NEAT.GENES.Connection a1b1 = new NEAT.GENES.Connection(a1.nb, b1.nb, 0.5f);
+        NEAT.GENES.Connection a2b1 = new NEAT.GENES.Connection(a2.nb, b1.nb, 0.5f);
+        NEAT.GENES.Connection b1c1 = new NEAT.GENES.Connection(b1.nb, c1.nb, 0.5f);
+        NEAT.GENES.Connection c1d1 = new NEAT.GENES.Connection(c1.nb, d1.nb, 0.5f);
+        NEAT.GENES.Connection a1d1 = new NEAT.GENES.Connection(a1.nb, d1.nb, 0.5f);
+        NEAT.GENES.Connection c1d2 = new NEAT.GENES.Connection(c1.nb, d2.nb, 0.5f);
+        NEAT.GENES.Connection b1d2 = new NEAT.GENES.Connection(b1.nb, d2.nb, 0.2f);
         a.node_gene.Add(a1);
         a.node_gene.Add(a2);
         a.node_gene.Add(b1);
@@ -49,12 +52,25 @@ public class Test : MonoBehaviour
         inputs.Add(0.5f);
         inputs.Add(0.5f);
         Debug.Log(a.network.evaluate(inputs)[0]);
-        Debug.Log(a.network.evaluate(inputs)[1]);
+        Debug.Log(a.network.evaluate(inputs)[1]);*/
+
+        a.instantiate();
+        a.buildModel();
+        //a.network.randomizeWeight();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        List<float> inputs = new List<float>();
+        inputs.Add(cube.transform.position.x/100f);
+        inputs.Add(cube.transform.position.z/100f);
+        inputs.Add(Vector3.Distance(Vector3.zero,cube.transform.position));
+        inputs.Add(1f);
+        List<float> res = a.network.evaluate(inputs);
+        //cube.transform.position = new Vector3(res[0] + cube.transform.position.x, 0f,res[1] + cube.transform.position.z);
+        cube.GetComponent<Rigidbody>().velocity = (new Vector3(10f*res[0], 0f, 10f*res[1]));
+
     }
 }

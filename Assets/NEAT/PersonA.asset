@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc2450c04301f1458d45b2d765cb01b, type: 3}
+  m_Name: PersonA
+  m_EditorClassIdentifier: 
+  node_gene:
+  - property: 0
+    nb: 0
+  - property: 0
+    nb: 1
+  - property: 0
+    nb: 2
+  - property: 0
+    nb: 3
+  - property: 2
+    nb: 4
+  - property: 2
+    nb: 5
+  - property: 2
+    nb: 6
+  - property: 2
+    nb: 7
+  - property: 2
+    nb: 8
+  - property: 2
+    nb: 9
+  - property: 1
+    nb: 10
+  - property: 1
+    nb: 11
+  - property: 1
+    nb: 11
+  - property: 1
+    nb: 11
+  node_connect:
+  - inNode: 0
+    outNode: 4
+    w: 0.2
+  - inNode: 1
+    outNode: 4
+    w: -0.5
+  - inNode: 2
+    outNode: 4
+    w: 0.5
+  - inNode: 3
+    outNode: 4
+    w: -0.75
+  - inNode: 0
+    outNode: 5
+    w: -0.3
+  - inNode: 1
+    outNode: 5
+    w: 0.9
+  - inNode: 2
+    outNode: 5
+    w: -0.1
+  - inNode: 3
+    outNode: 5
+    w: -0.3
+  - inNode: 0
+    outNode: 6
+    w: -0.3
+  - inNode: 1
+    outNode: 6
+    w: 0.3
+  - inNode: 2
+    outNode: 6
+    w: 0.6
+  - inNode: 3
+    outNode: 6
+    w: -0.24
+  - inNode: 4
+    outNode: 7
+    w: 0.67
+  - inNode: 5
+    outNode: 9
+    w: 0.86
+  - inNode: 6
+    outNode: 9
+    w: -0.45
+  - inNode: 4
+    outNode: 8
+    w: -0.45
+  - inNode: 5
+    outNode: 8
+    w: -0.45
+  - inNode: 6
+    outNode: 8
+    w: -0.45
+  - inNode: 8
+    outNode: 9
+    w: -0.45
+  - inNode: 8
+    outNode: 10
+    w: -0.45
+  - inNode: 9
+    outNode: 10
+    w: -0.45
+  - inNode: 6
+    outNode: 11
+    w: -0.45
+  - inNode: 7
+    outNode: 11
+    w: -0.45

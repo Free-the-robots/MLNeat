@@ -15,15 +15,26 @@ namespace NN
 
         public virtual float activation(float x)
         {
+            //return 1f/(1f+Mathf.Exp(-x));
+            //return (1f - Mathf.Exp(-2f*x)) / (1f + Mathf.Exp(-2f*x));
+            if (x > 1f)
+                x = 1f;
+            if (x < -1f)
+                x = -1f;
             return x;
+            //return (float)System.Math.Tanh(x);
         }
 
         public float evaluateBack(List<float> inputs)
         {
             float sum = 0f;
-
             if (inNodes == null)
-                return activation(inputs[nb]);
+            {
+                if (inputs.Count > nb)
+                    return activation(inputs[nb]);
+                else
+                    return 0f;
+            }
 
             for(int i = 0; i < inNodes.Count; ++i)
             {
@@ -73,14 +84,14 @@ namespace NN
 
             foreach(NEAT.GENES.Connection connection in connections)
             {
-                if (nodes_NN[connection.outNode.nb].inNodes == null)
-                    nodes_NN[connection.outNode.nb].inNodes = new List<Node>();
-                nodes_NN[connection.outNode.nb].inNodes.Add(nodes_NN[connection.inNode.nb]);
+                if (nodes_NN[connection.outNode].inNodes == null)
+                    nodes_NN[connection.outNode].inNodes = new List<Node>();
+                nodes_NN[connection.outNode].inNodes.Add(nodes_NN[connection.inNode]);
 
-                if (nodes_NN[connection.inNode.nb].outNodes == null)
-                    nodes_NN[connection.inNode.nb].outNodes = new List<Node>();
-                nodes_NN[connection.inNode.nb].outNodes.Add(nodes_NN[connection.outNode.nb]);
-                nodes_NN[connection.outNode.nb].w.Add(connection.w);
+                if (nodes_NN[connection.inNode].outNodes == null)
+                    nodes_NN[connection.inNode].outNodes = new List<Node>();
+                nodes_NN[connection.inNode].outNodes.Add(nodes_NN[connection.outNode]);
+                nodes_NN[connection.outNode].w.Add(connection.w);
             }
 
             foreach(NEAT.GENES.Node node in nodes)
@@ -111,6 +122,31 @@ namespace NN
             }
 
             return res;
+        }
+
+        public void randomizeWeight()
+        {
+            foreach (Node inN in inNodes)
+            {
+                for (int i = 0; i < inN.w.Count; ++i)
+                {
+                    inN.w[i] = Random.Range(-0.5f, 0.5f);
+                }
+            }
+            foreach (Node outN in outNodes)
+            {
+                for (int i = 0; i < outN.w.Count; ++i)
+                {
+                    outN.w[i] = Random.Range(-0.5f, 0.5f);
+                }
+            }
+            foreach (Node hidN in hidNodes)
+            {
+                for (int i = 0; i < hidN.w.Count; ++i)
+                {
+                    hidN.w[i] = Random.Range(-0.5f, 0.5f);
+                }
+            }
         }
     }
 }
