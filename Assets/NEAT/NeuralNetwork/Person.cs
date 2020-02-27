@@ -26,5 +26,10 @@ namespace NEAT
         {
             network = new NN.Net(node_gene, node_connect);
         }
+
+        public float similarities(Person person)
+        {
+            return 0f;
+        }
     }
 }
