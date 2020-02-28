@@ -37,9 +37,9 @@ namespace GA.Selection
         public int IndexOfClosestSpeciation(int person, List<NEAT.Person> population)
         {
             var rest_population = population;
-            NEAT.Person best_match = population.Where<NEAT.Person>((p, i) => i != person).OrderByDescending(p => population[person].similarities(p)).FirstOrDefault<NEAT.Person>();
+            NEAT.Person best_match = population.Where<NEAT.Person>((p, i) => i != person).OrderBy(p => population[person].distance(p)).FirstOrDefault<NEAT.Person>();
             
-            return population.IndexOf(best_match); ;
+            return population.IndexOf(best_match);
         }
 
         public override void selection(List<NEAT.Person> population, List<float> fitnesses, List<Tuple<NEAT.Person, NEAT.Person>> crossoverPop, float crossovers, List<NEAT.Person> mutationPop, float mutation)
@@ -53,8 +53,10 @@ namespace GA.Selection
                     index = 0;
 
                 int index2 = IndexOfClosestSpeciation(index, population);
+                if (index2 == -1)
+                    index2 = 0;
 
-                crossoverPop.Add(new Tuple<NEAT.Person, NEAT.Person>(population[index], population[(index2)]));
+                crossoverPop.Add(new Tuple<NEAT.Person, NEAT.Person>(population[index], population[index2]));
             }
             int mutationCount = (int)(mutation * population.Count);
             for (int i = 0; i < mutationCount; ++i)

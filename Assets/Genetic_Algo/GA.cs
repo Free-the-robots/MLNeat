@@ -123,9 +123,9 @@ namespace GA
         public virtual void selection()
         {
             orderedPop = population.OrderByDescending(p => fitness(p));
-            population_fit = orderedPop.Select(p => fitness(p)).ToList<float>();
+            population_fit = orderedPop.Select(p => fitness(p)).ToList();
 
-            results.AddRange(orderedPop.Take<T>((int)(elitesP*population_size)));
+            results.AddRange(orderedPop.Take((int)(elitesP*population_size)+1));
 
             crossoverPop = new List<Tuple<T, T>>();
             mutationPop = new List<T>();

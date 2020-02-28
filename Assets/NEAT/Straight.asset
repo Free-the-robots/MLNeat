@@ -14,18 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   node_gene:
   - property: 0
+    activation: 0
     nb: 0
   - property: 0
+    activation: 0
     nb: 1
   - property: 0
+    activation: 0
     nb: 2
   - property: 0
+    activation: 0
     nb: 3
   - property: 1
+    activation: 0
     nb: 4
   - property: 1
+    activation: 0
     nb: 5
   node_connect:
   - inNode: 3
     outNode: 4
     w: 1
+    enabled: 1
+    innov: 0

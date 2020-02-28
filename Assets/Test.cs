@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Test : MonoBehaviour
 {
     public NEAT.Person a;
+    public NEAT.Person b;
     public GameObject cube;
 
     // Start is called before the first frame update
@@ -56,6 +58,20 @@ public class Test : MonoBehaviour
 
         a.instantiate();
         a.buildModel();
+
+        b.instantiate();
+        b.buildModel();
+
+        List<NEAT.Person> population = new List<NEAT.Person>();
+        population.Add(a);
+        population.Add(b);
+
+        GA.GA<NEAT.Person> ga = new GA.GA<NEAT.Person>(population, new GA.Selection.NEAT_Selection(), new GA.Crossover.NEAT_Crossover(), new GA.Mutation.NEAT_Mutation());
+        ga.breed();
+        Debug.Log(ga.results[0].node_connect.Count);
+        Debug.Log(ga.results[0].node_gene.Count);
+        Debug.Log(ga.results[1].node_connect.Count);
+        Debug.Log(ga.results[1].node_gene.Count);
         //a.network.randomizeWeight();
     }
 
@@ -63,14 +79,14 @@ public class Test : MonoBehaviour
     void Update()
     {
 
-        List<float> inputs = new List<float>();
+       /* List<float> inputs = new List<float>();
         inputs.Add(cube.transform.position.x/100f);
         inputs.Add(cube.transform.position.z/100f);
         inputs.Add(Vector3.Distance(Vector3.zero,cube.transform.position));
         inputs.Add(1f);
         List<float> res = a.network.evaluate(inputs);
         //cube.transform.position = new Vector3(res[0] + cube.transform.position.x, 0f,res[1] + cube.transform.position.z);
-        cube.GetComponent<Rigidbody>().velocity = (new Vector3(10f*res[0], 0f, 10f*res[1]));
+        cube.GetComponent<Rigidbody>().velocity = (new Vector3(10f*res[0], 0f, 10f*res[1]));*/
 
     }
 }

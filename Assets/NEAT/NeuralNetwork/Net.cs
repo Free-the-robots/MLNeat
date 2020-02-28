@@ -43,6 +43,38 @@ namespace NN
             return activation(sum);
         }
     }
+    public class Rectifier : Node
+    {
+        public override float activation(float x)
+        {
+            if (x >= 0f)
+                x = 1f;
+            if (x < 0f)
+                x = -1f;
+            return x;
+        }
+    }
+    public class SinNode : Node
+    {
+        public override float activation(float x)
+        {
+            return Mathf.Sin(x);
+        }
+    }
+    public class CosNode : Node
+    {
+        public override float activation(float x)
+        {
+            return Mathf.Cos(x);
+        }
+    }
+    public class TanhNode : Node
+    {
+        public override float activation(float x)
+        {
+            return (float)System.Math.Tanh(x);
+        }
+    }
 
     public class Net
     {
@@ -77,12 +109,30 @@ namespace NN
             int nIndex = 0;
             foreach(NEAT.GENES.Node node in nodes)
             {
-                Node a = new Node();
+                Node a = null;
+                switch (node.activation)
+                {
+                    case NEAT.GENES.Node.ACTIVATION.NORMAL:
+                        a = new Node();
+                        break;
+                    case NEAT.GENES.Node.ACTIVATION.COS:
+                        a = new CosNode();
+                        break;
+                    case NEAT.GENES.Node.ACTIVATION.SIN:
+                        a = new SinNode();
+                        break;
+                    case NEAT.GENES.Node.ACTIVATION.TANH:
+                        a = new TanhNode();
+                        break;
+                    case NEAT.GENES.Node.ACTIVATION.RECT:
+                        a = new Rectifier();
+                        break;
+                }
                 a.nb = nIndex++;
                 nodes_NN[node.nb] = a;
             }
 
-            foreach(NEAT.GENES.Connection connection in connections)
+            foreach (NEAT.GENES.Connection connection in connections)
             {
                 if (nodes_NN[connection.outNode].inNodes == null)
                     nodes_NN[connection.outNode].inNodes = new List<Node>();

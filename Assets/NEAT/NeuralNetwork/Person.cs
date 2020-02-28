@@ -30,15 +30,46 @@ namespace NEAT
 
         public void instantiate()
         {
-            foreach(GENES.Connection connection in node_connect)
+            foreach (GENES.Connection connection in node_connect)
             {
                 connection.instantiate();
             }
-	}
+	    }
 
-        public float similarities(Person person)
+        public float distance(Person person)
         {
-            return 0f;
+            float N = Mathf.Max(node_gene.Count, person.node_gene.Count);
+            if (N < 20)
+                N = 1f;
+
+            var dissimilarNodes1 = node_connect.Where(n => !person.node_connect.Select(n1 => n1.innov).Contains(n.innov));
+            var dissimilarNodes2 = person.node_connect.Where(n => !node_connect.Select(n1 => n1.innov).Contains(n.innov));
+            var unionDissimilar = dissimilarNodes1.Union(dissimilarNodes2);
+            List<GENES.Connection> similarNodes1 = node_connect.Where(n => person.node_connect.Select(n1 => n1.innov).Contains(n.innov)).ToList();
+            List<GENES.Connection> similarNodes2 = person.node_connect.Where(n => node_connect.Select(n1 => n1.innov).Contains(n.innov)).ToList();
+
+
+            float disjoints = unionDissimilar.Count();
+            float weaverage = 0f;
+            for(int i = 0; i < similarNodes1.Count; ++i)
+            {
+                weaverage += Mathf.Abs(similarNodes1[i].w - similarNodes2[i].w);
+            }
+            if(similarNodes1.Count != 0)
+                weaverage /= similarNodes1.Count;
+
+            float c1 = 0.5f;
+            float c2 = 0.5f;
+
+            return disjoints*c1/N + weaverage * c2;
+        }
+
+        public Person Clone()
+        {
+            Person res = new Person();
+            res.node_connect = new List<GENES.Connection>(node_connect);
+            res.node_gene = new List<GENES.Node>(node_gene);
+            return res;
         }
     }
 }

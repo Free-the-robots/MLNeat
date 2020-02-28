@@ -321,6 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   a: {fileID: 11400000, guid: 66e1a347295ae403b8832ed6116fd5ff, type: 2}
+  b: {fileID: 11400000, guid: 4a8139aa1703d4d27acac5d7f437aae0, type: 2}
   cube: {fileID: 445673083}
 --- !u!81 &463720836
 AudioListener:
