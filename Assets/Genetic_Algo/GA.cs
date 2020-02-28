@@ -14,7 +14,7 @@ namespace GA
     {
         public class GA_Selection<T>
         {
-            public virtual void selection(List<T> population, List<float> fitnesses, List<Tuple<T, T>> crossoverPop, float crossovers, List<T> mutationPop, float mutation)
+            public virtual void selection(List<T> population, int size, int eliteSize, List<float> fitnesses, List<Tuple<T, T>> crossoverPop, float crossovers, List<T> mutationPop)
             {
 
             }
@@ -59,36 +59,51 @@ namespace GA
         protected List<Tuple<T, T>> crossoverPop = null;
         protected List<T> mutationPop = null;
 
-        public GA(List<T> init_population, float elites_count = 0.05f, float crossovers = 0.8f)
+        public GA(List<T> init_population, int size = 10, float elites_count = 0.05f, float crossovers = 0.8f)
         {
             selectionObj = new Roulette<T>();
             crossoverObj = new GA_Crossover<T>();
             mutationObj = new GA_Mutation<T>();
 
             population = init_population;
-            population_size = population.Count;
+            population_size = size;
             elitesP = elites_count;
             crossoversP = crossovers;
 
-            crossoverPop = new List<Tuple<T, T>>((int)(crossoversP * population_size));
-            mutationPop = new List<T>((int)((1f - crossoversP) * population_size));
 
-            population_fit = new List<float>(population_size);
+            int crossoverPopN = (int)(crossoversP * population_size);
+            crossoverPop = new List<Tuple<T, T>>(crossoverPopN - (int)(elitesP * population.Count));
+            mutationPop = new List<T>(population_size - crossoverPopN - (int)(elitesP * population.Count));
+
+            population_fit = new List<float>(population.Count);
         }
 
-        public GA(List<T> init_population, GA_Selection<T> selectionType, GA_Crossover<T> crossoverType, GA_Mutation<T> mutationType, float elites_count = 0.05f, float crossovers = 0.8f)
+        public GA(List<T> init_population, GA_Selection<T> selectionType, GA_Crossover<T> crossoverType, GA_Mutation<T> mutationType, int size = 10, float elites_count = 0.05f, float crossovers = 0.8f)
         {
             selectionObj = selectionType;
             crossoverObj = crossoverType;
             mutationObj = mutationType;
 
             population = init_population;
-            population_size = population.Count;
+            population_size = size;
             elitesP = elites_count;
             crossoversP = crossovers;
 
-            crossoverPop = new List<Tuple<T, T>>((int)(crossoversP * population_size));
-            mutationPop = new List<T>((int)((1f-crossoversP) * population_size));
+            int crossoverPopN = (int)(crossoversP * population_size);
+            crossoverPop = new List<Tuple<T, T>>(crossoverPopN - (int)(elitesP*population.Count));
+            mutationPop = new List<T>(population_size - crossoverPopN - (int)(elitesP * population.Count));
+
+            population_fit = new List<float>(population.Count);
+        }
+
+        public void updatePopulation(List<T> init_population)
+        {
+            population = init_population;
+            int crossoverPopN = (int)(crossoversP * population_size);
+            crossoverPop = new List<Tuple<T, T>>(crossoverPopN - (int)(elitesP * population.Count));
+            mutationPop = new List<T>(population_size - crossoverPopN - (int)(elitesP * population.Count));
+
+            population_fit = new List<float>(population.Count);
         }
 
         public virtual float fitness(T person)
@@ -123,18 +138,17 @@ namespace GA
         public virtual void selection()
         {
             orderedPop = population.OrderByDescending(p => fitness(p));
-            population_fit = orderedPop.Select(p => fitness(p)).ToList();
+            population_fit.AddRange(orderedPop.Select(p => fitness(p)));
 
-            results.AddRange(orderedPop.Take((int)(elitesP*population_size)+1));
+            results.AddRange(orderedPop.Take((int)(elitesP*population.Count)));
 
-            crossoverPop = new List<Tuple<T, T>>();
-            mutationPop = new List<T>();
-            selectionObj.selection(orderedPop.ToList<T>(), population_fit, crossoverPop, crossoversP, mutationPop, 1f - crossoversP);
+            selectionObj.selection(orderedPop.ToList(), population_size, (int)(elitesP * population.Count),population_fit, crossoverPop, crossoversP, mutationPop);
         }
 
         public List<T> breed()
         {
             results.Clear();
+            population_fit.Clear();
 
             orderedPop = null;
             crossoverPop.Clear();

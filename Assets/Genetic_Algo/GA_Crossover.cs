@@ -9,7 +9,7 @@ namespace GA.Crossover
     {
         public override NEAT.Person crossover(NEAT.Person person1, NEAT.Person person2)
         {
-            NEAT.Person res = new NEAT.Person();
+            NEAT.Person res = ScriptableObject.CreateInstance<NEAT.Person>();
 
             var dissimilar1 = person1.node_connect.Where(n => !person2.node_connect.Select(n1 => n1.innov).Contains(n.innov));
             var dissimilar2 = person2.node_connect.Where(n => !person1.node_connect.Select(n1 => n1.innov).Contains(n.innov));
@@ -50,13 +50,14 @@ namespace GA.Crossover
                 }
                 else
                 {
-                    if(conn1.w < conn2.w)
-                        res.node_connect.Add(conn1);
+                    if(conn1.innov < conn2.innov)
+                        res.node_connect.Add(conn1.Clone());
                     else
-                        res.node_connect.Add(conn2);
+                        res.node_connect.Add(conn2.Clone());
+                    res.node_connect.Last().w = (conn1.w + conn2.w) / 2.0f;
 
-                    if (conn1.enabled || conn2.enabled)
-                        res.node_connect.Last().enabled = true;
+                    if (!conn1.enabled || !conn2.enabled)
+                        res.node_connect.Last().enabled = false;
 
                     NEAT.GENES.Node inN = person1.node_gene[conn1.inNode];
                     NEAT.GENES.Node outN = person1.node_gene[conn1.outNode];

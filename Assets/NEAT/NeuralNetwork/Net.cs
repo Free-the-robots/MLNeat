@@ -75,6 +75,27 @@ namespace NN
             return (float)System.Math.Tanh(x);
         }
     }
+    public class GaussianNode : Node
+    {
+        public override float activation(float x)
+        {
+            return 1f/Mathf.Sqrt(0.5f*Mathf.PI)*Mathf.Exp(-(x*x));
+        }
+    }
+    public class BipolarNode : Node
+    {
+        public override float activation(float x)
+        {
+            return (1f - Mathf.Exp(-x))/ (1f + Mathf.Exp(-x));
+        }
+    }
+    public class TanNode : Node
+    {
+        public override float activation(float x)
+        {
+            return Mathf.Tan(x);
+        }
+    }
 
     public class Net
     {
@@ -106,13 +127,13 @@ namespace NN
         public Net(List<NEAT.GENES.Node> nodes, List<NEAT.GENES.Connection> connections)
         {
             Dictionary<int,Node> nodes_NN = new Dictionary<int,Node>();
-            int nIndex = 0;
+            //int nIndex = 0;
             foreach(NEAT.GENES.Node node in nodes)
             {
                 Node a = null;
                 switch (node.activation)
                 {
-                    case NEAT.GENES.Node.ACTIVATION.NORMAL:
+                    case NEAT.GENES.Node.ACTIVATION.RAMP:
                         a = new Node();
                         break;
                     case NEAT.GENES.Node.ACTIVATION.COS:
@@ -127,21 +148,33 @@ namespace NN
                     case NEAT.GENES.Node.ACTIVATION.RECT:
                         a = new Rectifier();
                         break;
+                    case NEAT.GENES.Node.ACTIVATION.TAN:
+                        a = new TanNode();
+                        break;
+                    case NEAT.GENES.Node.ACTIVATION.BIPOLAR:
+                        a = new BipolarNode();
+                        break;
+                    case NEAT.GENES.Node.ACTIVATION.GAUSSIAN:
+                        a = new GaussianNode();
+                        break;
                 }
-                a.nb = nIndex++;
+                a.nb = node.nb;
                 nodes_NN[node.nb] = a;
             }
 
             foreach (NEAT.GENES.Connection connection in connections)
             {
-                if (nodes_NN[connection.outNode].inNodes == null)
-                    nodes_NN[connection.outNode].inNodes = new List<Node>();
-                nodes_NN[connection.outNode].inNodes.Add(nodes_NN[connection.inNode]);
+                if (connection.enabled)
+                {
+                    if (nodes_NN[connection.outNode].inNodes == null)
+                        nodes_NN[connection.outNode].inNodes = new List<Node>();
+                    nodes_NN[connection.outNode].inNodes.Add(nodes_NN[connection.inNode]);
 
-                if (nodes_NN[connection.inNode].outNodes == null)
-                    nodes_NN[connection.inNode].outNodes = new List<Node>();
-                nodes_NN[connection.inNode].outNodes.Add(nodes_NN[connection.outNode]);
-                nodes_NN[connection.outNode].w.Add(connection.w);
+                    if (nodes_NN[connection.inNode].outNodes == null)
+                        nodes_NN[connection.inNode].outNodes = new List<Node>();
+                    nodes_NN[connection.inNode].outNodes.Add(nodes_NN[connection.outNode]);
+                    nodes_NN[connection.outNode].w.Add(connection.w);
+                }
             }
 
             foreach(NEAT.GENES.Node node in nodes)

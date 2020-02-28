@@ -7,8 +7,12 @@ public class Test : MonoBehaviour
 {
     public NEAT.Person a;
     public NEAT.Person b;
+    public NEAT.Person c;
+
+    public NEAT.Person chosen;
     public GameObject cube;
 
+    GA.GA<NEAT.Person> ga;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,37 +60,79 @@ public class Test : MonoBehaviour
         Debug.Log(a.network.evaluate(inputs)[0]);
         Debug.Log(a.network.evaluate(inputs)[1]);*/
 
-        a.instantiate();
+        //a.instantiate();
         a.buildModel();
 
-        b.instantiate();
+        //b.instantiate();
         b.buildModel();
+
+        c.buildModel();
+
+        foreach (NEAT.GENES.Connection connection in a.node_connect)
+        {
+            NEAT.GENES.Connection.addConnection(connection);
+        }
+
+        foreach (NEAT.GENES.Connection connection in b.node_connect)
+        {
+            NEAT.GENES.Connection.addConnection(connection);
+        }
+
+        foreach (NEAT.GENES.Connection connection in c.node_connect)
+        {
+            NEAT.GENES.Connection.addConnection(connection);
+        }
 
         List<NEAT.Person> population = new List<NEAT.Person>();
         population.Add(a);
         population.Add(b);
+        population.Add(c);
 
-        GA.GA<NEAT.Person> ga = new GA.GA<NEAT.Person>(population, new GA.Selection.NEAT_Selection(), new GA.Crossover.NEAT_Crossover(), new GA.Mutation.NEAT_Mutation());
-        ga.breed();
-        Debug.Log(ga.results[0].node_connect.Count);
-        Debug.Log(ga.results[0].node_gene.Count);
-        Debug.Log(ga.results[1].node_connect.Count);
-        Debug.Log(ga.results[1].node_gene.Count);
+        Debug.Log(a);
+        Debug.Log(b);
+        Debug.Log(c);
+        NEAT.GENES.Connection.global_innov = 7;
+
+        ga = new GA.GA<NEAT.Person>(population, new GA.Selection.NEAT_Selection(), new GA.Crossover.NEAT_Crossover(), new GA.Mutation.NEAT_Mutation(), 10, 0.05f, 0.2f);
+        //ga.breed();
+
+        //for (int i = 0; i < ga.results.Count; i++)
+        //    Debug.Log(ga.results[i]);
         //a.network.randomizeWeight();
+        chosen = a;
     }
 
+    float time = 0f;
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
-       /* List<float> inputs = new List<float>();
-        inputs.Add(cube.transform.position.x/100f);
-        inputs.Add(cube.transform.position.z/100f);
+        time += Time.deltaTime;
+        if (time > 3.0f)
+        {
+            breed();
+            time = 0f;
+            cube.transform.position = new Vector3(0f, 0f, 0f);
+            cube.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
+        }
+        List<float> inputs = new List<float>();
+        inputs.Add(cube.transform.position.x/10f);
+        inputs.Add(cube.transform.position.z/10f);
         inputs.Add(Vector3.Distance(Vector3.zero,cube.transform.position));
         inputs.Add(1f);
-        List<float> res = a.network.evaluate(inputs);
+        List<float> res = chosen.network.evaluate(inputs);
         //cube.transform.position = new Vector3(res[0] + cube.transform.position.x, 0f,res[1] + cube.transform.position.z);
-        cube.GetComponent<Rigidbody>().velocity = (new Vector3(10f*res[0], 0f, 10f*res[1]));*/
+        cube.GetComponent<Rigidbody>().velocity = (new Vector3(100f*res[0], 0f, 100f*res[1]));
 
+    }
+
+    public void breed()
+    {
+        ga.breed();
+
+        System.Random random = new System.Random();
+        chosen = ga.results[random.Next(ga.results.Count)];
+        Debug.Log(chosen);
+        chosen.buildModel();
+        ga.updatePopulation(ga.results.Skip(2).Take(4).ToList());
     }
 }

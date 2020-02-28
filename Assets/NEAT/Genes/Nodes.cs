@@ -7,8 +7,8 @@ namespace NEAT
 
     namespace GENES
     {
-        [System.Serializable]
-        public class Node
+        [System.Serializable, CreateAssetMenu(fileName = "Node", menuName = "NEAT/Node", order = 1)]
+        public class Node : ScriptableObject
         {
             public enum NODE{
                 IN,
@@ -18,11 +18,14 @@ namespace NEAT
 
             public enum ACTIVATION
             {
-                NORMAL,
+                RAMP,
                 SIN,
                 COS,
                 TANH,
-                RECT
+                TAN,
+                RECT,
+                BIPOLAR,
+                GAUSSIAN
             }
 
             [SerializeField]
@@ -56,7 +59,8 @@ namespace NEAT
 
             public Node Clone()
             {
-                Node res = new Node();
+                //Node res = new Node();
+                Node res = ScriptableObject.CreateInstance<NEAT.GENES.Node>();
                 res.property = property;
                 res.activation = activation;
                 res.nb = nb;

@@ -45,18 +45,21 @@ namespace NEAT
             var dissimilarNodes1 = node_connect.Where(n => !person.node_connect.Select(n1 => n1.innov).Contains(n.innov));
             var dissimilarNodes2 = person.node_connect.Where(n => !node_connect.Select(n1 => n1.innov).Contains(n.innov));
             var unionDissimilar = dissimilarNodes1.Union(dissimilarNodes2);
-            List<GENES.Connection> similarNodes1 = node_connect.Where(n => person.node_connect.Select(n1 => n1.innov).Contains(n.innov)).ToList();
-            List<GENES.Connection> similarNodes2 = person.node_connect.Where(n => node_connect.Select(n1 => n1.innov).Contains(n.innov)).ToList();
-
 
             float disjoints = unionDissimilar.Count();
+
             float weaverage = 0f;
-            for(int i = 0; i < similarNodes1.Count; ++i)
+            /*
+            List<GENES.Connection> similarConns1 = node_connect.Where(n => person.node_connect.Select(n1 => n1.innov).Contains(n.innov)).ToList();
+            List<GENES.Connection> similarConns2 = person.node_connect.Where(n => node_connect.Select(n1 => n1.innov).Contains(n.innov)).ToList();
+
+
+            for(int i = 0; i < similarConns1.Count; ++i)
             {
-                weaverage += Mathf.Abs(similarNodes1[i].w - similarNodes2[i].w);
+                weaverage += Mathf.Abs(similarConns1[i].w - similarConns2[i].w);
             }
-            if(similarNodes1.Count != 0)
-                weaverage /= similarNodes1.Count;
+            if(similarConns1.Count != 0)
+                weaverage /= similarConns1.Count;*/
 
             float c1 = 0.5f;
             float c2 = 0.5f;
@@ -64,9 +67,20 @@ namespace NEAT
             return disjoints*c1/N + weaverage * c2;
         }
 
+        public override string ToString()
+        {
+            string res = "Nodes Count : " + node_gene.Count + ", Node Connections" + node_connect.Count + "\n";
+            res += "In : " + node_gene.Where(p => p.property == GENES.Node.NODE.IN).Count() + ", Out :" + node_gene.Where(p => p.property == GENES.Node.NODE.OUT).Count() + "\n\n";
+            foreach(GENES.Connection conn in node_connect)
+            {
+                res += conn;
+            }
+            return res;
+        }
+
         public Person Clone()
         {
-            Person res = new Person();
+            Person res = ScriptableObject.CreateInstance<NEAT.Person>();
             res.node_connect = new List<GENES.Connection>(node_connect);
             res.node_gene = new List<GENES.Node>(node_gene);
             return res;
