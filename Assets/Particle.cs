@@ -20,18 +20,22 @@ public class Particle : MonoBehaviour
                 weapon.buildModel();
         }
         initPos = transform.position;
+
+        inputs.Add((transform.position.z - initPos.z) / 10f);
+        inputs.Add((transform.position.x - initPos.x) / 10f);
+        inputs.Add(Vector3.Distance(initPos, transform.position));
+        inputs.Add(1f);
     }
     float t = 0f;
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         t += Time.deltaTime;
-        inputs.Add((transform.position.z - initPos.z));
-        inputs.Add((transform.position.x - initPos.x));
-        inputs.Add(Vector3.Distance(initPos, transform.position));
-        inputs.Add(1f);
+        inputs[0] = ((transform.position.z - initPos.z)*1f);
+        inputs[1] = ((transform.position.x - initPos.x)*1f);
+        inputs[2] = (Vector3.Distance(initPos, transform.position));
         List<float> res = weapon.network.evaluate(inputs);
-        body.velocity = (new Vector3(10f * res[1], 0f, 10f * res[0]));
+        body.velocity = (new Vector3(50f * res[1], 0f, 50f * res[0]));
         if (t > lifeTime)
             GameObject.Destroy(this.gameObject);
     }
