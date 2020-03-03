@@ -8,8 +8,11 @@ public class Particle : MonoBehaviour
     private Rigidbody body;
     private List<float> inputs = new List<float>(4);
 
+    public ParticlePooling pool;
+
     private Vector3 initPos;
     public float lifeTime = 5f;
+    float t = 0f;
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -25,8 +28,9 @@ public class Particle : MonoBehaviour
         inputs.Add((transform.position.x - initPos.x) / 10f);
         inputs.Add(Vector3.Distance(initPos, transform.position));
         inputs.Add(1f);
+
+        t = 0f;
     }
-    float t = 0f;
     // Update is called once per frame
     void Update()
     {
@@ -37,6 +41,6 @@ public class Particle : MonoBehaviour
         List<float> res = weapon.network.evaluate(inputs);
         body.velocity = (new Vector3(50f * res[1], 0f, 50f * res[0]));
         if (t > lifeTime)
-            GameObject.Destroy(this.gameObject);
+            pool.destroy(this.gameObject);
     }
 }

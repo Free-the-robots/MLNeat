@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public NEAT.Person weapon;
 
-    public GameObject particle;
+    public ParticlePooling pool;
     public float freq = 10f;
     // Start is called before the first frame update
     void Start()
@@ -37,10 +37,12 @@ public class PlayerController : MonoBehaviour
         {
             if(t > 1F/freq)
             {
-                GameObject part = GameObject.Instantiate(particle, null, true);
+                pool.instantiate(transform.position, weapon);
+                /*GameObject part = GameObject.Instantiate(particle, null, true);
                 part.transform.position = player.transform.position;
                 part.GetComponent<Particle>().weapon = weapon;
-                part.GetComponent<Particle>().enabled = true;
+                part.GetComponent<Particle>().enabled = true;*/
+
                 t = 0f;
             }
         }
