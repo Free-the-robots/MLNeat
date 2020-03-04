@@ -72,7 +72,12 @@ namespace NEAT
         {
             string res = "Nodes Count : " + node_gene.Count + ", Node Connections" + node_connect.Count + "\n";
             res += "In : " + node_gene.Where(p => p.property == GENES.NODE.IN).Count() + ", Out :" + node_gene.Where(p => p.property == GENES.NODE.OUT).Count() + "\n\n";
-            foreach(GENES.Connection conn in node_connect)
+            foreach (GENES.Nodes node in node_gene)
+            {
+                res += node + ", ";
+            }
+            res += "\n";
+            foreach (GENES.Connection conn in node_connect)
             {
                 res += conn;
             }

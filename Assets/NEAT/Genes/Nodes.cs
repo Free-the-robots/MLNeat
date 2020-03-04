@@ -57,6 +57,11 @@ namespace NEAT
             {
                 init(mode, act, n);
             }
+            
+            public override string ToString()
+            {
+                return "Node (" + nb + "," + property + "," + activation + ")";
+            }
 
             public Nodes Clone()
             {
