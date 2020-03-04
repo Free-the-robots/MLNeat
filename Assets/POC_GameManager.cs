@@ -37,7 +37,8 @@ public class POC_GameManager : MonoBehaviour
         }
         ga.breed();
 
-        player.weapon = ga.results.Take(3).ToList();
+        System.Random random = new System.Random();
+        player.weapon = new List<NEAT.Person>() { ga.results[random.Next(ga.results.Count - 1)], ga.results[random.Next(ga.results.Count - 1)], ga.results[random.Next(ga.results.Count - 1)] };
         player.chosenW = player.weapon[0];
         player.chosenW.buildModel();
         Debug.Log(player.weapon[0]);
