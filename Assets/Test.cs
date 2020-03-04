@@ -135,4 +135,9 @@ public class Test : MonoBehaviour
         chosen.buildModel();
         ga.updatePopulation(ga.results.Skip(2).Take(4).ToList());
     }
+
+    public void Save()
+    {
+        chosen.Save();
+    }
 }

@@ -17,11 +17,11 @@ namespace GA.Mutation
                 List<Tuple<int, int>> innout = new List<Tuple<int, int>>();
                 for(int i = 0; i < res.node_gene.Count; ++i)
                 {
-                    if (res.node_gene[i].property != NEAT.GENES.Node.NODE.OUT)
+                    if (res.node_gene[i].property != NEAT.GENES.NODE.OUT)
                     {
                         for (int j = i + 1; j < res.node_gene.Count; ++j)
                         {
-                            if (res.node_gene[j].property != NEAT.GENES.Node.NODE.IN)
+                            if (res.node_gene[j].property != NEAT.GENES.NODE.IN)
                                 innout.Add(new Tuple<int, int>(res.node_gene[i].nb, res.node_gene[j].nb));
                         }
                     }
@@ -63,11 +63,10 @@ namespace GA.Mutation
                 res.node_connect[ran] = res.node_connect[ran].Clone();
                 res.node_connect[ran].enabled = false;
 
-                //NEAT.GENES.Node newn = new NEAT.GENES.Node();
-                NEAT.GENES.Node newn = ScriptableObject.CreateInstance<NEAT.GENES.Node>();
-                newn.activation = (NEAT.GENES.Node.ACTIVATION)random.Next(8);
+                NEAT.GENES.Nodes newn = ScriptableObject.CreateInstance<NEAT.GENES.Nodes>();
+                newn.activation = (NEAT.GENES.ACTIVATION)random.Next(8);
                 newn.nb = res.node_gene.Select(n => n.nb).Max()+1;
-                newn.property = NEAT.GENES.Node.NODE.HIDDEN;
+                newn.property = NEAT.GENES.NODE.HIDDEN;
 
 
                 NEAT.GENES.Connection con1;

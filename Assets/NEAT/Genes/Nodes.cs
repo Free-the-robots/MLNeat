@@ -4,29 +4,30 @@ using UnityEngine;
 
 namespace NEAT
 {
-
     namespace GENES
     {
-        [System.Serializable, CreateAssetMenu(fileName = "Node", menuName = "NEAT/Node", order = 1)]
-        public class Node : ScriptableObject
+        public enum NODE
         {
-            public enum NODE{
-                IN,
-                OUT,
-                HIDDEN
-            }
+            IN,
+            OUT,
+            HIDDEN
+        }
 
-            public enum ACTIVATION
-            {
-                RAMP,
-                SIN,
-                COS,
-                TANH,
-                TAN,
-                RECT,
-                BIPOLAR,
-                GAUSSIAN
-            }
+        public enum ACTIVATION
+        {
+            RAMP,
+            SIN,
+            COS,
+            TANH,
+            TAN,
+            RECT,
+            BIPOLAR,
+            GAUSSIAN
+        }
+
+        [System.Serializable, CreateAssetMenu(fileName = "Node", menuName = "NEAT/Node", order = 1)]
+        public class Nodes : ScriptableObject
+        {
 
             [SerializeField]
             public NODE property = NODE.IN;
@@ -45,22 +46,21 @@ namespace NEAT
                 nb = n;
             }
 
-            public Node()
+            public Nodes()
             {
                 property = NODE.IN;
                 activation = ACTIVATION.SIN;
                 nb = 0;
             }
 
-            public Node(NODE mode, ACTIVATION act, int n)
+            public Nodes(NODE mode, ACTIVATION act, int n)
             {
                 init(mode, act, n);
             }
 
-            public Node Clone()
+            public Nodes Clone()
             {
-                //Node res = new Node();
-                Node res = ScriptableObject.CreateInstance<NEAT.GENES.Node>();
+                Nodes res = ScriptableObject.CreateInstance<NEAT.GENES.Nodes>();
                 res.property = property;
                 res.activation = activation;
                 res.nb = nb;
