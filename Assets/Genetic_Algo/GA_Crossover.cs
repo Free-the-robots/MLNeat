@@ -16,7 +16,7 @@ namespace GA.Crossover
             var similar = person1.node_connect.Where(n => person2.node_connect.Select(n1 => n1.innov).Contains(n.innov));
             var innov = similar.Select(n => n.innov);
 
-            res.node_gene = new List<NEAT.GENES.Node>(person1.node_gene.Union(person2.node_gene).ToList());
+            res.node_gene = new List<NEAT.GENES.Nodes>(person1.node_gene.Union(person2.node_gene).ToList());
 
             List<int> id = innov.Union(dissimilar1.Union(dissimilar2).Select(n => n.innov)).OrderBy(n=>n).ToList();
 
@@ -30,8 +30,8 @@ namespace GA.Crossover
                 {
                     res.node_connect.Add(conn2);
 
-                    NEAT.GENES.Node inN = person2.node_gene[conn2.inNode];
-                    NEAT.GENES.Node outN = person2.node_gene[conn2.outNode];
+                    NEAT.GENES.Nodes inN = person2.node_gene[conn2.inNode];
+                    NEAT.GENES.Nodes outN = person2.node_gene[conn2.outNode];
                     if (!nbNodes.Contains(inN.nb))
                         res.node_gene.Add(inN);
                     if (!nbNodes.Contains(outN.nb))
@@ -41,8 +41,8 @@ namespace GA.Crossover
                 {
                     res.node_connect.Add(conn1);
 
-                    NEAT.GENES.Node inN = person1.node_gene[conn1.inNode];
-                    NEAT.GENES.Node outN = person1.node_gene[conn1.outNode];
+                    NEAT.GENES.Nodes inN = person1.node_gene[conn1.inNode];
+                    NEAT.GENES.Nodes outN = person1.node_gene[conn1.outNode];
                     if (!nbNodes.Contains(inN.nb))
                         res.node_gene.Add(inN);
                     if (!nbNodes.Contains(outN.nb))
@@ -59,8 +59,8 @@ namespace GA.Crossover
                     if (!conn1.enabled || !conn2.enabled)
                         res.node_connect.Last().enabled = false;
 
-                    NEAT.GENES.Node inN = person1.node_gene[conn1.inNode];
-                    NEAT.GENES.Node outN = person1.node_gene[conn1.outNode];
+                    NEAT.GENES.Nodes inN = person1.node_gene[conn1.inNode];
+                    NEAT.GENES.Nodes outN = person1.node_gene[conn1.outNode];
                     if (!nbNodes.Contains(inN.nb))
                         res.node_gene.Add(inN);
                     if (!nbNodes.Contains(outN.nb))

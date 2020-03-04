@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.IO;
 
 namespace NEAT
 {
-    [CreateAssetMenu(fileName = "Person", menuName = "NEAT/Person", order = 1)]
+    [System.Serializable, CreateAssetMenu(fileName = "Person", menuName = "NEAT/Person", order = 1)]
     public class Person : ScriptableObject
     {
-        public List<GENES.Node> node_gene = new List<GENES.Node>();
+        public List<GENES.Nodes> node_gene = new List<GENES.Nodes>();
         public List<GENES.Connection> node_connect = new List<GENES.Connection>();
         public int usage = 0;
 
@@ -16,7 +17,7 @@ namespace NEAT
 
         public List<float> evaluate(List<float> inputs)
         {
-            int inNodesN = node_gene.Where<GENES.Node>(node => node.property == GENES.Node.NODE.IN).Count();
+            int inNodesN = node_gene.Where(node => node.property == GENES.NODE.IN).Count();
 
             if (inputs.Count != inNodesN)
                 return null;
@@ -50,17 +51,17 @@ namespace NEAT
             float disjoints = unionDissimilar.Count();
 
             float weaverage = 0f;
-            /*
-            List<GENES.Connection> similarConns1 = node_connect.Where(n => person.node_connect.Select(n1 => n1.innov).Contains(n.innov)).ToList();
-            List<GENES.Connection> similarConns2 = person.node_connect.Where(n => node_connect.Select(n1 => n1.innov).Contains(n.innov)).ToList();
 
+            var innov1 = node_connect.Select(n => n.innov);
+            var innov2 = person.node_connect.Select(n => n.innov);
+            var innovSimilar = innov1.Intersect(innov2);
 
-            for(int i = 0; i < similarConns1.Count; ++i)
+            foreach(int innov in innovSimilar)
             {
-                weaverage += Mathf.Abs(similarConns1[i].w - similarConns2[i].w);
+                weaverage += Mathf.Abs(node_connect.Find(n => n.innov == innov).w - person.node_connect.Find(n => n.innov == innov).w);
             }
-            if(similarConns1.Count != 0)
-                weaverage /= similarConns1.Count;*/
+            if(innovSimilar.Count() != 0)
+                weaverage /= innovSimilar.Count();
 
             float c1 = 0.5f;
             float c2 = 0.5f;
@@ -71,8 +72,8 @@ namespace NEAT
         public override string ToString()
         {
             string res = "Nodes Count : " + node_gene.Count + ", Node Connections" + node_connect.Count + "\n";
-            res += "In : " + node_gene.Where(p => p.property == GENES.Node.NODE.IN).Count() + ", Out :" + node_gene.Where(p => p.property == GENES.Node.NODE.OUT).Count() + "\n\n";
-            foreach (GENES.Node node in node_gene)
+            res += "In : " + node_gene.Where(p => p.property == GENES.NODE.IN).Count() + ", Out :" + node_gene.Where(p => p.property == GENES.NODE.OUT).Count() + "\n\n";
+            foreach (GENES.Nodes node in node_gene)
             {
                 res += node + ", ";
             }
@@ -88,8 +89,25 @@ namespace NEAT
         {
             Person res = ScriptableObject.CreateInstance<NEAT.Person>();
             res.node_connect = new List<GENES.Connection>(node_connect);
-            res.node_gene = new List<GENES.Node>(node_gene);
+            res.node_gene = new List<GENES.Nodes>(node_gene);
             return res;
+        }
+
+        public void Save()
+        {
+            string json = "{\n\t\"node_gene\": [\n";
+            foreach(GENES.Nodes node in node_gene)
+            {
+                json += node.GetInstanceID() + " " + JsonUtility.ToJson(node,true) + ",\n";
+            }
+            json += "\n\t],\n\t\"node_connect\": [\n";
+            foreach (GENES.Connection connection in node_connect)
+            {
+                json += connection.GetInstanceID() + " " + JsonUtility.ToJson(connection,true) + ",\n";
+            }
+            json += "\n\t]\n}";
+            File.WriteAllText(Application.dataPath + Path.DirectorySeparatorChar + "AvatarData.txt", json);
+            Debug.Log("Saved to : " + Application.dataPath + Path.DirectorySeparatorChar + "AvatarData.txt");
         }
     }
 }
