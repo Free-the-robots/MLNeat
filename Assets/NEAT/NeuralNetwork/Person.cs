@@ -10,6 +10,7 @@ namespace NEAT
     {
         public List<GENES.Node> node_gene = new List<GENES.Node>();
         public List<GENES.Connection> node_connect = new List<GENES.Connection>();
+        public int usage = 0;
 
         public NN.Net network = null;
 

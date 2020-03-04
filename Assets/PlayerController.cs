@@ -7,7 +7,9 @@ public class PlayerController : MonoBehaviour
     public GameObject player;
     private Plane plane;
 
-    public NEAT.Person weapon;
+    public List<NEAT.Person> weapon = new List<NEAT.Person>();
+    public NEAT.Person chosenW = null;
+    private int wIndex = 0;
 
     public ParticlePooling pool;
     public float freq = 10f;
@@ -15,6 +17,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         plane = new Plane(Vector3.up, Vector3.zero);
+        chosenW = weapon[wIndex];
     }
 
 
@@ -37,7 +40,8 @@ public class PlayerController : MonoBehaviour
         {
             if(t > 1F/freq)
             {
-                pool.instantiate(transform.position, weapon);
+                pool.instantiate(transform.position, chosenW);
+                chosenW.usage++;
                 /*GameObject part = GameObject.Instantiate(particle, null, true);
                 part.transform.position = player.transform.position;
                 part.GetComponent<Particle>().weapon = weapon;
@@ -45,6 +49,13 @@ public class PlayerController : MonoBehaviour
 
                 t = 0f;
             }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            wIndex = (wIndex+1) % weapon.Count;
+            chosenW = weapon[wIndex];
+            Debug.Log(wIndex);
         }
     }
 }

@@ -93,7 +93,7 @@ public class Test : MonoBehaviour
         Debug.Log(c);
         NEAT.GENES.Connection.global_innov = 7;
 
-        ga = new GA.GA<NEAT.Person>(population, new GA.Selection.NEAT_Selection(), new GA.Crossover.NEAT_Crossover(), new GA.Mutation.NEAT_Mutation(), 10, 0.05f, 0.2f);
+        ga = new GA.GA<NEAT.Person>(population, new GA.Selection.NEAT_Selection(), new GA.Crossover.NEAT_Crossover(), new GA.Mutation.NEAT_Mutation(), new GA.Fitness.NEAT_Fitness(), 10, 0.05f, 0.2f);
         //ga.breed();
 
         //for (int i = 0; i < ga.results.Count; i++)
@@ -133,6 +133,6 @@ public class Test : MonoBehaviour
         chosen = ga.results[random.Next(ga.results.Count)];
         Debug.Log(chosen);
         chosen.buildModel();
-        ga.updatePopulation(ga.results.Skip(2).Take(4).ToList());
+        ga.updatePopulation(ga.results.Take(3).ToList());
     }
 }

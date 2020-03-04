@@ -208,9 +208,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1472778657}
-  a: {fileID: 11400000, guid: b7ab3a16063624e80aac8615c87ba5af, type: 2}
-  b: {fileID: 11400000, guid: fce96a238a48c4368b52c793f70a303a, type: 2}
-  c: {fileID: 11400000, guid: 72d76583cb837486f828721e15047234, type: 2}
 --- !u!1 &1073500372
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +382,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1472778652}
-  weapon: {fileID: 11400000, guid: b7ab3a16063624e80aac8615c87ba5af, type: 2}
+  weapon:
+  - {fileID: 11400000, guid: b7ab3a16063624e80aac8615c87ba5af, type: 2}
+  - {fileID: 11400000, guid: fce96a238a48c4368b52c793f70a303a, type: 2}
+  - {fileID: 11400000, guid: 72d76583cb837486f828721e15047234, type: 2}
+  chosenW: {fileID: 0}
   pool: {fileID: 1688463048713353194}
   freq: 10
 --- !u!1001 &1688463048713353193

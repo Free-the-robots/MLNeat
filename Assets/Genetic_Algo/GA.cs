@@ -7,9 +7,20 @@ using System;
 using GA.Selection;
 using GA.Crossover;
 using GA.Mutation;
+using GA.Fitness;
 
 namespace GA
 {
+    namespace Fitness
+    {
+        public class GA_Fitness<T>
+        {
+            public virtual float fitness(T person)
+            {
+                return 0f;
+            }
+        }
+    }
     namespace Selection
     {
         public class GA_Selection<T>
@@ -53,6 +64,7 @@ namespace GA
         protected GA_Selection<T> selectionObj = null;
         protected GA_Crossover<T> crossoverObj = null;
         protected GA_Mutation<T> mutationObj = null;
+        protected GA_Fitness<T> fitnessObj = null;
 
         protected int population_size = 0;
         protected IEnumerable<T> orderedPop = null;
@@ -64,6 +76,7 @@ namespace GA
             selectionObj = new Roulette<T>();
             crossoverObj = new GA_Crossover<T>();
             mutationObj = new GA_Mutation<T>();
+            fitnessObj = new GA_Fitness<T>();
 
             population = init_population;
             population_size = size;
@@ -78,11 +91,12 @@ namespace GA
             population_fit = new List<float>(population.Count);
         }
 
-        public GA(List<T> init_population, GA_Selection<T> selectionType, GA_Crossover<T> crossoverType, GA_Mutation<T> mutationType, int size = 10, float elites_count = 0.05f, float crossovers = 0.8f)
+        public GA(List<T> init_population, GA_Selection<T> selectionType, GA_Crossover<T> crossoverType, GA_Mutation<T> mutationType, GA_Fitness<T> fitnessType, int size = 10, float elites_count = 0.05f, float crossovers = 0.8f)
         {
             selectionObj = selectionType;
             crossoverObj = crossoverType;
             mutationObj = mutationType;
+            fitnessObj = fitnessType;
 
             population = init_population;
             population_size = size;
@@ -104,11 +118,6 @@ namespace GA
             mutationPop = new List<T>(population_size - crossoverPopN - (int)(elitesP * population.Count));
 
             population_fit = new List<float>(population.Count);
-        }
-
-        public virtual float fitness(T person)
-        {
-            return 0f;
         }
 
         public void crossover()
@@ -137,8 +146,8 @@ namespace GA
 
         public virtual void selection()
         {
-            orderedPop = population.OrderByDescending(p => fitness(p));
-            population_fit.AddRange(orderedPop.Select(p => fitness(p)));
+            orderedPop = population.OrderByDescending(p => fitnessObj.fitness(p));
+            population_fit.AddRange(orderedPop.Select(p => fitnessObj.fitness(p)));
 
             results.AddRange(orderedPop.Take((int)(elitesP*population.Count)));
 
