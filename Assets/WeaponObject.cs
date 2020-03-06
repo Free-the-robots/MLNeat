@@ -1,0 +1,27 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WeaponObject : MonoBehaviour
+{
+    public NEAT.Person contained;
+
+    // Update is called once per frame
+    float t = 0f;
+    void Update()
+    {
+        t += Time.deltaTime;
+        GetComponent<Rigidbody>().velocity = (new Vector3(Mathf.Sin(t)*2, 0f, -3));
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            PlayerController pc = other.GetComponent<PlayerController>();
+            pc.weapon[pc.wIndex] = contained;
+            pc.chosenW = contained;
+            GameObject.Destroy(this.gameObject);
+        }
+    }
+}

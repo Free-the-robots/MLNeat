@@ -8,8 +8,9 @@ public class PlayerController : MonoBehaviour
     private Plane plane;
 
     public List<NEAT.Person> weapon = new List<NEAT.Person>();
+    public List<NEAT.Person> usedWepons = new List<NEAT.Person>();
     public NEAT.Person chosenW = null;
-    private int wIndex = 0;
+    public int wIndex = 0;
 
     public ParticlePooling pool;
     public float freq = 10f;
@@ -42,6 +43,11 @@ public class PlayerController : MonoBehaviour
             {
                 pool.instantiate(transform.position, chosenW);
                 chosenW.usage++;
+                if (!usedWepons.Contains(chosenW))
+                {
+                    usedWepons.Add(chosenW);
+                    Debug.Log("Added chosenW");
+                }
                 /*GameObject part = GameObject.Instantiate(particle, null, true);
                 part.transform.position = player.transform.position;
                 part.GetComponent<Particle>().weapon = weapon;
