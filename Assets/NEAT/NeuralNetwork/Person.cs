@@ -44,17 +44,16 @@ namespace NEAT
             if (N < 20)
                 N = 1f;
 
-            var dissimilarNodes1 = node_connect.Where(n => !person.node_connect.Select(n1 => n1.innov).Contains(n.innov));
-            var dissimilarNodes2 = person.node_connect.Where(n => !node_connect.Select(n1 => n1.innov).Contains(n.innov));
-            var unionDissimilar = dissimilarNodes1.Union(dissimilarNodes2);
-
-            float disjoints = unionDissimilar.Count();
-
-            float weaverage = 0f;
-
             var innov1 = node_connect.Select(n => n.innov);
             var innov2 = person.node_connect.Select(n => n.innov);
+            //Similar Edges
             var innovSimilar = innov1.Intersect(innov2);
+
+            //Disjoint Edges
+            var unionDissimilar = innov1.Except(innov2).Union(innov2.Except(innov1));
+            int disjoints = unionDissimilar.Count();
+
+            float weaverage = 0f;
 
             foreach(int innov in innovSimilar)
             {
