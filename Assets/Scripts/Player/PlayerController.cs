@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public PlayerData playerData;
+
     public GameObject player;
     private Plane plane;
 
@@ -14,6 +16,11 @@ public class PlayerController : MonoBehaviour
 
     public ParticlePooling pool;
     public float freq = 10f;
+
+    public GameEvent playerHealthUp;
+    public GameEvent playerHealthDown;
+    public GameEvent hitEvent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,10 +55,8 @@ public class PlayerController : MonoBehaviour
                     usedWepons.Add(chosenW);
                     Debug.Log("Added chosenW");
                 }
-                /*GameObject part = GameObject.Instantiate(particle, null, true);
-                part.transform.position = player.transform.position;
-                part.GetComponent<Particle>().weapon = weapon;
-                part.GetComponent<Particle>().enabled = true;*/
+
+                hitEvent.Raise();
 
                 t = 0f;
             }
@@ -63,5 +68,10 @@ public class PlayerController : MonoBehaviour
             chosenW = weapon[wIndex];
             Debug.Log(wIndex);
         }
+    }
+
+    public void Hitting()
+    {
+        Debug.Log("yo");
     }
 }
