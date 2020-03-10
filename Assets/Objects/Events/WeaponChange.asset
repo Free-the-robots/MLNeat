@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 650ee15e0b91d43179cae0c085fffca5, type: 3}
-  m_Name: PData
+  m_Script: {fileID: 11500000, guid: 64fb580d42d224aee817c2a5e3c588ea, type: 3}
+  m_Name: WeaponChange
   m_EditorClassIdentifier: 
-  life: 1000
-  lifeMax: 1000
-  speed: 20

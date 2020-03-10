@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     public GameEvent playerHealthUpdate;
     public GameEvent hitEvent;
+    public GameEventInt changeWeapon;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
         {
             wIndex = (wIndex+1) % weapon.Count;
             chosenW = weapon[wIndex];
+            changeWeapon.Raise(wIndex);
             Debug.Log(wIndex);
         }
     }

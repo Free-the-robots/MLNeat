@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public PlayerData playerData;
+
     public RectTransform lifeUI;
+    public Text lifeText;
+    public List<Image> weaponsInv = new List<Image>();
 
     private float lifeRatio;
 
@@ -23,15 +27,17 @@ public class UIManager : MonoBehaviour
         set { lifeMaxValue = value; lifeRatio = lifeUI.parent.GetComponent<RectTransform>().rect.width / value; }
     }
 
+    private int chosenW = 0;
+
 
     // Start is called before the first frame update
     void OnEnable()
     {
         lifeMax = playerData.lifeMax;
         life = playerData.life;
+        lifeText.text = life + "/" + lifeMax;
     }
 
-    float t = 0f;
     // Update is called once per frame
     void Update()
     {
@@ -41,5 +47,13 @@ public class UIManager : MonoBehaviour
     {
         lifeMax = playerData.lifeMax;
         life = playerData.life;
+        lifeText.text = life + "/" + lifeMax;
+    }
+
+    public void ChangeWeapon(int n)
+    {
+        weaponsInv[chosenW].color = Color.white;
+        chosenW = n;
+        weaponsInv[n].color = Color.red;
     }
 }
