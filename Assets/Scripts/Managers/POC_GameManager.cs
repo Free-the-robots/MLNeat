@@ -27,12 +27,12 @@ public class POC_GameManager : MonoBehaviour
         time += Time.deltaTime;
         if(time > 10f)
         {
+            time = 0f;
             GameObject gb = GameObject.Instantiate(weaponObject);
             gb.transform.position = objectTransform.position;
             WeaponObject wp = gb.GetComponent<WeaponObject>();
             NEAT.Person p = ga.results[random.Next(ga.results.Count - 1)];
             wp.contained = p;
-            time = 0f;
         }
 
     }

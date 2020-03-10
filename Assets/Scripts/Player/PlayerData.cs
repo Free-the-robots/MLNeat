@@ -7,4 +7,6 @@ public class PlayerData : ScriptableObject
 {
     public float life;
     public float lifeMax;
+
+    public float speed;
 }

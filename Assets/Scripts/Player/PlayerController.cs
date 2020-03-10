@@ -17,8 +17,7 @@ public class PlayerController : MonoBehaviour
     public ParticlePooling pool;
     public float freq = 10f;
 
-    public GameEvent playerHealthUp;
-    public GameEvent playerHealthDown;
+    public GameEvent playerHealthUpdate;
     public GameEvent hitEvent;
 
     // Start is called before the first frame update
@@ -41,7 +40,7 @@ public class PlayerController : MonoBehaviour
             // some point of the plane was hit - get its coordinates
             Vector3 hitPoint = ray.GetPoint(distance);
             // use the hitPoint to aim your cannon
-            player.transform.position = hitPoint;
+            player.transform.position = Vector3.MoveTowards(player.transform.position, hitPoint, Time.deltaTime * playerData.speed);
         }
 
         if (Input.GetMouseButton(0))
@@ -53,10 +52,7 @@ public class PlayerController : MonoBehaviour
                 if (!usedWepons.Contains(chosenW))
                 {
                     usedWepons.Add(chosenW);
-                    Debug.Log("Added chosenW");
                 }
-
-                hitEvent.Raise();
 
                 t = 0f;
             }
@@ -70,8 +66,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Hitting()
+    public void loseHealth(int health)
     {
-        Debug.Log("yo");
+        playerData.life -= health;
+
+        if (playerData.life <= 0)
+            playerData.life = 0;
+
+        playerHealthUpdate.Raise();
+    }
+
+    public void addHealth(int health)
+    {
+        playerData.life += health;
+
+        if (playerData.life > playerData.lifeMax)
+            playerData.life = playerData.lifeMax;
+
+        playerHealthUpdate.Raise();
     }
 }
