@@ -12,6 +12,7 @@ public class POC_GameManager : MonoBehaviour
 
     GA.GA<NEAT.Person> ga;
 
+    private float crossoverP = 0.1f;
 
     System.Random random = new System.Random();
     // Start is called before the first frame update
@@ -41,13 +42,17 @@ public class POC_GameManager : MonoBehaviour
     {
         if(ga == null)
         {
-            ga = new GA.GA<NEAT.Person>(player.weapon, new GA.Selection.NEAT_Selection(), new GA.Crossover.NEAT_Crossover(), new GA.Mutation.NEAT_Mutation(), new GA.Fitness.NEAT_Fitness(), 10, 0.05f, 0.2f);
+            ga = new GA.GA<NEAT.Person>(player.weapon, new GA.Selection.NEAT_Selection(), new GA.Crossover.NEAT_Crossover(), new GA.Mutation.NEAT_Mutation(), new GA.Fitness.NEAT_Fitness(), 10, 0.05f, 0.1f);
         }
         else
         {
             ga.updatePopulation(player.usedWepons);
+            ga.updateParameters(ga.population_size, ga.elitesP, crossoverP);
         }
         ga.breed();
+        crossoverP += 0.1f;
+        if (crossoverP > 0.6f)
+            crossoverP = 0.6f;
 
         player.usedWepons.Clear();
 

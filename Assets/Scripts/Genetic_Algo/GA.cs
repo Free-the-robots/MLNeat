@@ -58,6 +58,7 @@ namespace GA
         public List<T> results = new List<T>();
         public float elitesP = 0.05f;
         public float crossoversP = 0.8f;
+        public int population_size = 0;
         public List<T> population;
         public List<float> population_fit = null;
 
@@ -66,7 +67,6 @@ namespace GA
         protected GA_Mutation<T> mutationObj = null;
         protected GA_Fitness<T> fitnessObj = null;
 
-        protected int population_size = 0;
         protected IEnumerable<T> orderedPop = null;
         protected List<Tuple<T, T>> crossoverPop = null;
         protected List<T> mutationPop = null;
@@ -113,6 +113,21 @@ namespace GA
         public void updatePopulation(List<T> init_population)
         {
             population = init_population;
+            int crossoverPopN = (int)(crossoversP * population_size);
+            crossoverPop = new List<Tuple<T, T>>(crossoverPopN - (int)(elitesP * population.Count));
+            mutationPop = new List<T>(population_size - crossoverPopN - (int)(elitesP * population.Count));
+
+            population_fit = new List<float>(population.Count);
+        }
+
+        public void updateParameters(int size = 10, float elites_count = 0.05f, float crossovers = 0.8f)
+        {
+            population_size = size;
+            
+            population_size = size;
+            elitesP = elites_count;
+            crossoversP = crossovers;
+
             int crossoverPopN = (int)(crossoversP * population_size);
             crossoverPop = new List<Tuple<T, T>>(crossoverPopN - (int)(elitesP * population.Count));
             mutationPop = new List<T>(population_size - crossoverPopN - (int)(elitesP * population.Count));

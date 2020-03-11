@@ -36,8 +36,7 @@ namespace GA.Selection
     {
         public int IndexOfClosestSpeciation(int person, List<NEAT.Person> population)
         {
-            var rest_population = population;
-            NEAT.Person best_match = population.Where((p, i) => i != person).OrderBy(p => population[person].distance(p)).FirstOrDefault();
+            NEAT.Person best_match = population.Where((p, i) => i != person).OrderBy(p => population[person].distance(p)).ToList()[(int)(UnityEngine.Random.value*(population.Count/3f))];
             
             return population.IndexOf(best_match);
         }

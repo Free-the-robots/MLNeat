@@ -58,7 +58,7 @@ namespace NN
         public static Texture2D imageFromNet(NN.Net net)
         {
             List<Vector3> path = simulateNet(net);
-            string a = "";
+            //string a = "";
             //for (int i = 0; i < path.Count; ++i)
             //    a += path[i] + "\n";
             //Debug.Log(a);
