@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public PlayerData playerData;
+    public PlayerController playerController;
 
     public RectTransform lifeUI;
     public Text lifeText;
-    public List<Image> weaponsInv = new List<Image>();
+    public List<RawImage> weaponsInv = new List<RawImage>();
 
     private float lifeRatio;
 
@@ -33,9 +33,17 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        lifeMax = playerData.lifeMax;
-        life = playerData.life;
+        lifeMax = playerController.playerData.lifeMax;
+        life = playerController.playerData.life;
         lifeText.text = life + "/" + lifeMax;
+
+        for (int i = 0; i < playerController.weapon.Count; i++)
+        {
+            if (playerController.weapon[i].network == null)
+                playerController.weapon[i].buildModel();
+
+            weaponsInv[i].texture = NN.ImageFromNet.imageFromNet(playerController.weapon[i].network);
+        }
     }
 
     // Update is called once per frame
@@ -45,8 +53,8 @@ public class UIManager : MonoBehaviour
 
     public void PlayerHealthUpdate()
     {
-        lifeMax = playerData.lifeMax;
-        life = playerData.life;
+        lifeMax = playerController.playerData.lifeMax;
+        life = playerController.playerData.life;
         lifeText.text = life + "/" + lifeMax;
     }
 
@@ -55,5 +63,13 @@ public class UIManager : MonoBehaviour
         weaponsInv[chosenW].color = Color.white;
         chosenW = n;
         weaponsInv[n].color = Color.red;
+    }
+
+    public void NewWeapon()
+    {
+        if (playerController.weapon[chosenW].network == null)
+            playerController.weapon[chosenW].buildModel();
+
+        weaponsInv[chosenW].texture = NN.ImageFromNet.imageFromNet(playerController.weapon[chosenW].network);
     }
 }

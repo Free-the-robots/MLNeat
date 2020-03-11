@@ -6,7 +6,7 @@ public class Particle : MonoBehaviour
 {
     public NEAT.Person weapon;
     private Rigidbody body;
-    private List<float> inputs = new List<float>(4);
+    private List<float> inputs = new List<float>(4) { 0f, 0f, 0f, 1f };
 
     public ParticlePooling pool;
 
@@ -24,15 +24,15 @@ public class Particle : MonoBehaviour
         }
         initPos = transform.position;
 
-        inputs.Add((transform.position.z - initPos.z) / 10f);
-        inputs.Add((transform.position.x - initPos.x) / 10f);
-        inputs.Add(Vector3.Distance(initPos, transform.position));
-        inputs.Add(1f);
+        inputs[0] = (transform.position.z - initPos.z) / 10f;
+        inputs[1] = (transform.position.x - initPos.x) / 10f;
+        inputs[2] = Vector3.Distance(initPos, transform.position);
+        inputs[3] = 1f;
 
         t = 0f;
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         t += Time.deltaTime;
         inputs[0] = ((transform.position.z - initPos.z)*1f);
@@ -41,6 +41,8 @@ public class Particle : MonoBehaviour
         List<float> res = weapon.network.evaluate(inputs);
         body.velocity = (new Vector3(50f * res[1], 0f, 50f * res[0]));
         if (t > lifeTime)
+        {
             pool.destroy(this.gameObject);
+        }
     }
 }

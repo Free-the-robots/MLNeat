@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public GameEvent playerHealthUpdate;
     public GameEvent hitEvent;
     public GameEventInt changeWeapon;
+    public GameEvent newWeaponEvent;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +55,6 @@ public class PlayerController : MonoBehaviour
                 {
                     usedWepons.Add(chosenW);
                 }
-
                 t = 0f;
             }
         }
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
             wIndex = (wIndex+1) % weapon.Count;
             chosenW = weapon[wIndex];
             changeWeapon.Raise(wIndex);
-            Debug.Log(wIndex);
+            //Debug.Log(wIndex);
         }
     }
 
@@ -86,5 +86,13 @@ public class PlayerController : MonoBehaviour
             playerData.life = playerData.lifeMax;
 
         playerHealthUpdate.Raise();
+    }
+
+    public void newWeapon(NEAT.Person weaponC)
+    {
+        weapon[wIndex] = weaponC;
+        chosenW = weaponC;
+
+        newWeaponEvent.Raise();
     }
 }

@@ -18,9 +18,7 @@ public class WeaponObject : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            PlayerController pc = other.GetComponent<PlayerController>();
-            pc.weapon[pc.wIndex] = contained;
-            pc.chosenW = contained;
+            other.GetComponent<PlayerController>().newWeapon(contained);
             GameObject.Destroy(this.gameObject);
         }
     }
