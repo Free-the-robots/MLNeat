@@ -10,6 +10,22 @@ public class ParticlePooling : MonoBehaviour
     public Transform activesTransform;
 
     public int nb = 1000;
+
+    private static ParticlePooling instance;
+
+    public static ParticlePooling Instance { get { return instance; } }
+
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(this.gameObject);
+        else
+            instance = this;
+
+        DontDestroyOnLoad(this);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +38,7 @@ public class ParticlePooling : MonoBehaviour
         }
     }
 
-    public GameObject instantiate(Vector3 position, NEAT.Person part)
+    public GameObject instantiate(Vector3 position, NEAT.Person part, bool damaging = false, bool flip = false)
     {
         GameObject res = null;
         if(pool.Count > 0)
@@ -33,6 +49,9 @@ public class ParticlePooling : MonoBehaviour
             res.transform.position = position;
             res.GetComponent<Particle>().weapon = part;
             res.GetComponent<Particle>().pool = this;
+            if (flip)
+                res.GetComponent<Particle>().scale = -1f;
+            res.GetComponent<Particle>().damaging = damaging;
             res.GetComponent<Particle>().enabled = true;
             res.SetActive(true);
         }

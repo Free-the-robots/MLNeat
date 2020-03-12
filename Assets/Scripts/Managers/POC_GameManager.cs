@@ -15,6 +15,22 @@ public class POC_GameManager : MonoBehaviour
     private float crossoverP = 0.1f;
 
     System.Random random = new System.Random();
+
+    private static POC_GameManager instance;
+
+    public static POC_GameManager Instance { get { return instance; } }
+
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(this.gameObject);
+        else
+            instance = this;
+
+        DontDestroyOnLoad(this);
+    }
+
     // Start is called before the first frame update
     void Start()
     {

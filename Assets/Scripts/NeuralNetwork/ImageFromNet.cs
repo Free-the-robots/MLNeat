@@ -9,7 +9,7 @@ namespace NN
 {
     public class ImageFromNet
     {
-        public static void DrawLine(Texture2D tex, Vector2 p1, Vector2 p2, Color32 col)
+        public static void DrawLine(Texture2D tex, Vector2 p1, Vector2 p2, Color32 col, int radius = 3)
         {
             Vector2 t = p1;
             float frac = 1 / Mathf.Sqrt(Mathf.Pow(p2.x - p1.x, 2) + Mathf.Pow(p2.y - p1.y, 2));
@@ -22,14 +22,24 @@ namespace NN
             {
                 t = Vector2.Lerp(p1, p2, ctr);
                 ctr += frac;
-                for(int i = -2; i < 3; ++i)
+
+                for(int i = -radius; i < radius; ++i)
                 {
-                    for (int j = -2; j < 3; ++j)
+                    for (int j = -radius; j < radius; ++j)
                     {
-                        int x = (int)(t.x - 2) + i;
-                        int y = (int)(t.y - 2) + j;
-                        if(x > 0 && x < tex.width && y > 0 && y < tex.height)
-                            data[x + y * tex.width] = col;
+                        int x = (int)(t.x) + i;
+                        int y = (int)(t.y) + j;
+                        float distSquared = Mathf.Sqrt(i * i + j * j);
+                        if (distSquared <= radius)
+                        {
+                            if (x > 0 && x < tex.width && y > 0 && y < tex.height)
+                            {
+                                //int alpha = (255 - (int)(distSquared / radius * 255));
+                                //col.a = (byte)alpha;
+
+                                data[x + y * tex.width] = col;
+                            }
+                        }
                     }
                 }
             }
@@ -58,24 +68,23 @@ namespace NN
         public static Texture2D imageFromNet(NN.Net net)
         {
             List<Vector3> path = simulateNet(net);
-            //string a = "";
-            //for (int i = 0; i < path.Count; ++i)
-            //    a += path[i] + "\n";
-            //Debug.Log(a);
 
-            Texture2D imageRes = new Texture2D(128, 128, TextureFormat.ARGB32, false);
+            Texture2D imageRes = new Texture2D(128, 128, TextureFormat.RGBA32, false);
+            imageRes.alphaIsTransparency = true;
 
-            Color color = new Color32(0, 0, 0, byte.MaxValue);
             float scale = 5.0f;
             Vector2 zeroPoint = new Vector2(64, 64);
             for (int i = 0; i < path.Count - 1; i++)
             {
                 Vector2 path1 = new Vector2(path[i].x, path[i].z) * scale;
                 Vector2 path2 = new Vector2(path[i+1].x, path[i+1].z) * scale;
+
+                Color32 color = Color.HSVToRGB((float)i / path.Count, 1f, 1f);
                 DrawLine(imageRes, zeroPoint + path1,
                     zeroPoint + path2,
-                    color);
-        }
+                    color,
+                    6);
+            }
 
             imageRes.Apply();
 

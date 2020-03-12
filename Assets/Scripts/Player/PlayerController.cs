@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     public NEAT.Person chosenW = null;
     public int wIndex = 0;
 
-    public ParticlePooling pool;
     public float freq = 10f;
 
     public GameEvent playerHealthUpdate;
@@ -49,7 +48,7 @@ public class PlayerController : MonoBehaviour
         {
             if(t > 1F/freq)
             {
-                pool.instantiate(transform.position, chosenW);
+                ParticlePooling.Instance.instantiate(transform.position, chosenW);
                 chosenW.usage++;
                 if (!usedWepons.Contains(chosenW))
                 {

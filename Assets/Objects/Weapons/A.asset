@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0dc2450c04301f1458d45b2d765cb01b, type: 3}
-  m_Name: B
+  m_Name: A
   m_EditorClassIdentifier: 
   node_gene:
   - {fileID: 11400000, guid: 68396214b30c0425596217117f706f2b, type: 2}
@@ -22,6 +22,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bfdc40692b8394f5682b825313121f11, type: 2}
   - {fileID: 11400000, guid: 256ed6410915647a48828af4742ee236, type: 2}
   node_connect:
-  - {fileID: 11400000, guid: a11a1728be8d94229ad8ea1bb6206935, type: 2}
-  - {fileID: 11400000, guid: a9fcd9fc3c52446b4a36bc250a3cf5d3, type: 2}
+  - {fileID: 11400000, guid: 25ce58f52900440fca0ed23ed452803f, type: 2}
+  - {fileID: 11400000, guid: cf5c105a2a5954a7eb5be8edb2dff36e, type: 2}
+  - {fileID: 11400000, guid: a1ec8768846e142dca4f0295312f8ee0, type: 2}
   - {fileID: 11400000, guid: cd1f2ec29a11b498e8098d1844fe5846, type: 2}
+  usage: 7
