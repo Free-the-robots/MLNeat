@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   property: 0
-  activation: 1
+  activation: 2
   nb: 1

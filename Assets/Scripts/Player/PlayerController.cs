@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        weapon[0] = weapon[0].Clone();
+        weapon[1] = weapon[1].Clone();
+        weapon[2] = weapon[2].Clone();
         plane = new Plane(Vector3.up, Vector3.zero);
         chosenW = weapon[wIndex];
     }
@@ -44,8 +47,8 @@ public class PlayerController : MonoBehaviour
             player.transform.position = Vector3.MoveTowards(player.transform.position, hitPoint, Time.deltaTime * playerData.speed);
         }
 
-        if (Input.GetMouseButton(0))
-        {
+        //if (Input.GetMouseButton(0))
+        //{
             if(t > 1F/freq)
             {
                 ParticlePooling.Instance.instantiate(transform, chosenW);
@@ -56,9 +59,9 @@ public class PlayerController : MonoBehaviour
                 }
                 t = 0f;
             }
-        }
+        //}
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             wIndex = (wIndex+1) % weapon.Count;
             chosenW = weapon[wIndex];

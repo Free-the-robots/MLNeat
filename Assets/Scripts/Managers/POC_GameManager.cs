@@ -38,18 +38,30 @@ public class POC_GameManager : MonoBehaviour
     }
 
     float time = 0f;
+    float timeB = 0f;
     // Update is called once per frame
     void Update()
     {
         time += Time.deltaTime;
-        if(time > 10f)
+        timeB += Time.deltaTime;
+        if (ga != null)
         {
-            time = 0f;
-            GameObject gb = GameObject.Instantiate(weaponObject);
-            gb.transform.position = objectTransform.position;
-            WeaponObject wp = gb.GetComponent<WeaponObject>();
-            NEAT.Person p = ga.results[random.Next(ga.results.Count - 1)];
-            wp.contained = p;
+            if (time > 5f)
+            {
+                time = 0f;
+                GameObject gb = GameObject.Instantiate(weaponObject);
+                gb.transform.position = objectTransform.position;
+                WeaponObject wp = gb.GetComponent<WeaponObject>();
+                NEAT.Person p = ga.results[random.Next(ga.results.Count - 1)];
+                wp.contained = p;
+            }
+        }
+            
+        if(timeB > 30f)
+        {
+            timeB = 0f;
+            if(player.usedWepons.Count > 1)
+                breed();
         }
 
     }
@@ -66,7 +78,7 @@ public class POC_GameManager : MonoBehaviour
             ga.updateParameters(ga.population_size, ga.elitesP, crossoverP);
         }
         ga.breed();
-        crossoverP += 0.1f;
+        crossoverP += 0.01f;
         if (crossoverP > 0.6f)
             crossoverP = 0.6f;
 

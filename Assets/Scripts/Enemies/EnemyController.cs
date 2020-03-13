@@ -57,9 +57,23 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void UpdateBehaviour()
     {
+        movingBehaviour();
+
+        t += Time.deltaTime;
+        if (t > 1f / pattern.particleFreq)
+        {
+            shootingPattern();
+            t = 0f;
+        }
+
+        shooterBehaviour();
+    }
+
+    protected virtual void movingBehaviour()
+    {
         pathTime += Time.deltaTime;
 
-        Vector3 path = bezierCurve(pattern.path[iSteps], pattern.path[iSteps + 1], pattern.path[iSteps + 2], pathTime);
+        Vector3 path = bezierCurve(pattern.path[iSteps], pattern.path[iSteps + 1], pattern.path[iSteps + 2], pathTime / pattern.time[iSteps]);
         if (flippedX)
             path.x = -path.x;
         transform.position = offset + StartV + path;// + Vector3.Lerp(pattern.path[iSteps], pattern.path[iSteps+1], pathTime / pattern.time[iSteps]);
@@ -78,15 +92,6 @@ public class EnemyController : MonoBehaviour
                     GameObject.Destroy(this.gameObject);
             }
         }
-
-        t += Time.deltaTime;
-        if (t > 1f / pattern.particleFreq)
-        {
-            shootingPattern();
-            t = 0f;
-        }
-
-        shooterBehaviour();
     }
 
     protected virtual void shootingPattern()

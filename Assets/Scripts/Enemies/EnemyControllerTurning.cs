@@ -22,7 +22,8 @@ public class EnemyControllerTurning : EnemyController
         timeTurn += Time.deltaTime;
         for (int i = 0; i < shooters.Count; ++i)
         {
-            shooters[i].Rotate(0, Mathf.Sin(timeTurn)*2, 0);
+            //shooters[i].Rotate(0, Mathf.Sin(timeTurn)*2, 0);
+            shooters[i].rotation = Quaternion.Euler(0f, 180f + Mathf.Sin(timeTurn) * 30, 0f);
         }
     }
 }
