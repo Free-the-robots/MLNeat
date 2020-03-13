@@ -49,8 +49,12 @@ public class ParticlePooling : MonoBehaviour
             res.transform.position = position;
             res.GetComponent<Particle>().weapon = part;
             res.GetComponent<Particle>().pool = this;
+
             if (flip)
                 res.GetComponent<Particle>().scale = -1f;
+            else
+                res.GetComponent<Particle>().scale = 1f;
+
             res.GetComponent<Particle>().damaging = damaging;
             res.GetComponent<Particle>().enabled = true;
             res.SetActive(true);

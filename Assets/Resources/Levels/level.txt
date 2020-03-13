@@ -1,0 +1,176 @@
+{
+    "periods": [
+        10.0,
+        10.0,
+        10.0,
+        3.0
+    ],
+    "patterns": [
+        {
+            "enemyNB": [
+                6
+            ],
+            "enemyLife": [
+                100,
+                100,
+                100,
+                100,
+                100,
+                100
+            ],
+            "enemyPattern": [
+                "Pattern1"
+            ],
+            "enemyWeapon": [
+                "BasicStraight"
+            ],
+            "enemyFlipped": [
+                false,
+                false,
+                false,
+                true,
+                true,
+                true
+            ],
+            "enemyOffset": [
+                {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 1.0
+                },
+                {
+                    "x": -2.0,
+                    "y": 0.0,
+                    "z": 2.0
+                },
+                {
+                    "x": -4.0,
+                    "y": 0.0,
+                    "z": 3.0
+                },
+                {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 1.0
+                },
+                {
+                    "x": 2.0,
+                    "y": 0.0,
+                    "z": 2.0
+                },
+                {
+                    "x": 4.0,
+                    "y": 0.0,
+                    "z": 3.0
+                }
+            ]
+        },
+        {
+            "enemyNB": [
+                4
+            ],
+            "enemyLife": [
+                100,
+                100,
+                100,
+                100
+            ],
+            "enemyPattern": [
+                "Pattern1"
+            ],
+            "enemyWeapon": [
+                "BasicStraight"
+            ],
+            "enemyFlipped": [
+                false,
+                false,
+                true,
+                true
+            ],
+            "enemyOffset": [
+                {
+                    "x": 4.0,
+                    "y": 0.0,
+                    "z": -4.0
+                },
+                {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                {
+                    "x": -4.0,
+                    "y": 0.0,
+                    "z": -4.0
+                },
+                {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            ]
+        },
+        {
+            "enemyNB": [
+                2
+            ],
+            "enemyLife": [
+                100,
+                100
+            ],
+            "enemyPattern": [
+                "Pattern2"
+            ],
+            "enemyWeapon": [
+                "BasicStraight"
+            ],
+            "enemyFlipped": [
+                false,
+                false
+            ],
+            "enemyOffset": [
+                {
+                    "x": 5.0,
+                    "y": 0.0,
+                    "z": -4.0
+                },
+                {
+                    "x": 2.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            ]
+        },
+        {
+            "enemyNB": [
+                2
+            ],
+            "enemyLife": [
+                100,
+                100
+            ],
+            "enemyPattern": [
+                "Pattern2"
+            ],
+            "enemyWeapon": [
+                "BasicStraight"
+            ],
+            "enemyFlipped": [
+                true,
+                true
+            ],
+            "enemyOffset": [
+                {
+                    "x": -5.0,
+                    "y": 0.0,
+                    "z": -4.0
+                },
+                {
+                    "x": -2.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            ]
+        }
+    ]
+}

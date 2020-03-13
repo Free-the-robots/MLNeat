@@ -6,13 +6,19 @@ public class EnemyController : MonoBehaviour
 {
     public NEAT.Person weapon;
     public EnemyPattern pattern;
+    public Vector3 offset;
+    public bool flippedX = false;
 
-    public float freq = 10f;
+    public int life = 100;
+
     float pathTime = 0f;
     float waitTime = 0f;
 
     int periodOn = 0;
     int periodOff = 0;
+
+    Vector3 StartV;
+
 
     Vector3 bezierCurve(Vector3 a, Vector3 b, Vector3 c, float t)
     {
@@ -24,7 +30,10 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = pattern.Start;
+        StartV = pattern.Start;
+        transform.position = offset + pattern.Start;
+        if (flippedX)
+            StartV.x = -StartV.x;
     }
 
     float t = 0f;
@@ -34,7 +43,10 @@ public class EnemyController : MonoBehaviour
     {
         pathTime += Time.deltaTime;
 
-        transform.position = pattern.Start + bezierCurve(pattern.path[iSteps], pattern.path[iSteps+1], pattern.path[iSteps+2], pathTime);// + Vector3.Lerp(pattern.path[iSteps], pattern.path[iSteps+1], pathTime / pattern.time[iSteps]);
+        Vector3 path = bezierCurve(pattern.path[iSteps], pattern.path[iSteps + 1], pattern.path[iSteps + 2], pathTime);
+        if (flippedX)
+            path.x = -path.x;
+        transform.position = offset + StartV + path;// + Vector3.Lerp(pattern.path[iSteps], pattern.path[iSteps+1], pathTime / pattern.time[iSteps]);
 
         if (pathTime / pattern.time[iSteps] >= 1f)
         {
@@ -52,7 +64,7 @@ public class EnemyController : MonoBehaviour
         }
 
         t += Time.deltaTime;
-        if (t > 1f / freq)
+        if (t > 1f / pattern.particleFreq)
         {
             shootingPattern();
             t = 0f;
@@ -76,6 +88,15 @@ public class EnemyController : MonoBehaviour
         else
         {
             periodOff++;
+        }
+    }
+
+    public void loseHealth(int health)
+    {
+        life -= health;
+        if(life <= 0)
+        {
+            GameObject.Destroy(this.gameObject);
         }
     }
 }

@@ -62,7 +62,11 @@ public class Particle : MonoBehaviour
             }
         }else if(other.GetComponent<EnemyController>() != null)
         {
-
+            if (!damaging)
+            {
+                other.GetComponent<EnemyController>().loseHealth(10);
+                GameObject.Destroy(this.gameObject);
+            }
         }
     }
 }
