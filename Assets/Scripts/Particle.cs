@@ -12,7 +12,6 @@ public class Particle : MonoBehaviour
 
     private Vector3 initPos;
     public float lifeTime = 5f;
-    public float scale = 1f;
 
     public bool damaging = false;
 
@@ -44,7 +43,9 @@ public class Particle : MonoBehaviour
         inputs[1] = ((transform.position.x - initPos.x)*1f);
         inputs[2] = (Vector3.Distance(initPos, transform.position));
         List<float> res = weapon.network.evaluate(inputs);
-        body.velocity = (new Vector3(50f * res[1] * scale, 0f, 50f * res[0] * scale));
+        Vector3 vel = (new Vector3(50f * res[1], 0f, 50f * res[0]));
+        body.velocity = transform.TransformDirection(vel);
+
         if (t > lifeTime)
         {
             pool.destroy(this.gameObject);

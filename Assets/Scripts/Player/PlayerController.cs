@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         {
             if(t > 1F/freq)
             {
-                ParticlePooling.Instance.instantiate(transform.position, chosenW);
+                ParticlePooling.Instance.instantiate(transform, chosenW);
                 chosenW.usage++;
                 if (!usedWepons.Contains(chosenW))
                 {

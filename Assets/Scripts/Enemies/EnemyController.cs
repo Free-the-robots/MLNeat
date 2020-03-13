@@ -9,15 +9,17 @@ public class EnemyController : MonoBehaviour
     public Vector3 offset;
     public bool flippedX = false;
 
+    public List<Transform> shooters = new List<Transform>();
+
     public int life = 100;
 
-    float pathTime = 0f;
-    float waitTime = 0f;
+    protected float pathTime = 0f;
+    protected float waitTime = 0f;
 
-    int periodOn = 0;
-    int periodOff = 0;
+    protected int periodOn = 0;
+    protected int periodOff = 0;
 
-    Vector3 StartV;
+    protected Vector3 StartV;
 
 
     Vector3 bezierCurve(Vector3 a, Vector3 b, Vector3 c, float t)
@@ -30,16 +32,30 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartV = pattern.Start;
-        transform.position = offset + pattern.Start;
-        if (flippedX)
-            StartV.x = -StartV.x;
+        StartBehaviour();
     }
 
     float t = 0f;
     int iSteps = 0;
     // Update is called once per frame
     void Update()
+    {
+        UpdateBehaviour();
+    }
+
+    protected virtual void StartBehaviour()
+    {
+        StartV = pattern.Start;
+        transform.position = offset + pattern.Start;
+        if (flippedX)
+            StartV.x = -StartV.x;
+
+        //TODO because enabled later
+        for (int i = 0; i < transform.childCount; ++i)
+            shooters.Add(transform.GetChild(i));
+    }
+
+    protected virtual void UpdateBehaviour()
     {
         pathTime += Time.deltaTime;
 
@@ -53,12 +69,12 @@ public class EnemyController : MonoBehaviour
             pathTime = pattern.time[iSteps];
 
             waitTime += Time.deltaTime;
-            if(waitTime >= pattern.waitTime[iSteps])
+            if (waitTime >= pattern.waitTime[iSteps])
             {
                 pathTime = 0f;
                 waitTime = 0f;
-                iSteps+=2;
-                if (iSteps >= pattern.path.Count-2)
+                iSteps += 2;
+                if (iSteps >= pattern.path.Count - 2)
                     GameObject.Destroy(this.gameObject);
             }
         }
@@ -69,9 +85,11 @@ public class EnemyController : MonoBehaviour
             shootingPattern();
             t = 0f;
         }
+
+        shooterBehaviour();
     }
 
-    public virtual void shootingPattern()
+    protected virtual void shootingPattern()
     {
         if (periodOff > pattern.periodOff)
         {
@@ -80,8 +98,8 @@ public class EnemyController : MonoBehaviour
                 periodOff = 0;
                 periodOn = 0;
             }
-
-            ParticlePooling.Instance.instantiate(transform.position, weapon, true, true);
+            for(int i = 0; i < shooters.Count; ++i)
+                ParticlePooling.Instance.instantiate(shooters[i], weapon, true);
 
             periodOn++;
         }
@@ -89,6 +107,10 @@ public class EnemyController : MonoBehaviour
         {
             periodOff++;
         }
+    }
+
+    protected virtual void shooterBehaviour()
+    {
     }
 
     public void loseHealth(int health)

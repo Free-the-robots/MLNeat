@@ -10,7 +10,6 @@ public class LevelManager : MonoBehaviour
 
     public static LevelManager Instance { get { return instance; } }
 
-    public GameObject enemy;
     Level.Levels level = null;
     public string levelName = "";
 
@@ -36,6 +35,7 @@ public class LevelManager : MonoBehaviour
         //level.periods.Add(10f);
         //Level.Patterns a = new Level.Patterns();
         //a.enemyNB.Add(6);
+        //a.enemyType.Add("Enemy");
         //a.enemyPattern.Add("Pattern1");
         //a.enemyWeapon.Add("BasicStraight");
 
@@ -67,6 +67,7 @@ public class LevelManager : MonoBehaviour
         //level.periods.Add(5f);
         //Level.Patterns b = new Level.Patterns();
         //b.enemyNB.Add(4);
+        //b.enemyType.Add("EnemyTurning");
         //b.enemyPattern.Add("Pattern1");
         //b.enemyWeapon.Add("BasicStraight");
 
@@ -93,6 +94,7 @@ public class LevelManager : MonoBehaviour
         //level.periods.Add(5f);
         //Level.Patterns c = new Level.Patterns();
         //c.enemyNB.Add(2);
+        //c.enemyType.Add("Enemy");
         //c.enemyPattern.Add("Pattern2");
         //c.enemyWeapon.Add("BasicStraight");
 
@@ -110,6 +112,7 @@ public class LevelManager : MonoBehaviour
         //level.periods.Add(3f);
         //Level.Patterns d = new Level.Patterns();
         //d.enemyNB.Add(2);
+        //d.enemyType.Add("Enemy");
         //d.enemyPattern.Add("Pattern2");
         //d.enemyWeapon.Add("BasicStraight");
 
@@ -139,8 +142,8 @@ public class LevelManager : MonoBehaviour
             {
                 for (int i = 0; i < level.patterns[steps].enemyNB[0]; i++)
                 {
-                    GameObject gb = GameObject.Instantiate(enemy);
-                    EnemyController enemyController = gb.AddComponent<EnemyController>();
+                    GameObject gb = GameObject.Instantiate(Resources.Load<GameObject>("Enemies/" + level.patterns[steps].enemyType[0]));
+                    EnemyController enemyController = gb.GetComponent<EnemyController>();
                     enemyController.flippedX = level.patterns[steps].enemyFlipped[i];
                     enemyController.offset = level.patterns[steps].enemyOffset[i];
                     enemyController.life = level.patterns[steps].enemyLife[i];

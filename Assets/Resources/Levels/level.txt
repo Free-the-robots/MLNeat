@@ -10,6 +10,9 @@
             "enemyNB": [
                 6
             ],
+            "enemyType": [
+                "Enemy"
+            ],
             "enemyLife": [
                 100,
                 100,
@@ -69,6 +72,9 @@
             "enemyNB": [
                 4
             ],
+            "enemyType": [
+                "EnemyTurning"
+            ],
             "enemyLife": [
                 100,
                 100,
@@ -114,6 +120,9 @@
             "enemyNB": [
                 2
             ],
+            "enemyType": [
+                "Enemy"
+            ],
             "enemyLife": [
                 100,
                 100
@@ -144,6 +153,9 @@
         {
             "enemyNB": [
                 2
+            ],
+            "enemyType": [
+                "Enemy"
             ],
             "enemyLife": [
                 100,

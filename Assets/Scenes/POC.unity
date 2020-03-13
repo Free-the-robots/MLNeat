@@ -227,7 +227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e08190aa27734463b1e9dc38c3eebae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 8997830037944123673, guid: 56c66a31efb25416d8f15ab4b893529a, type: 3}
   levelName: level
 --- !u!4 &116781484
 Transform:

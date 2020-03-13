@@ -8,6 +8,7 @@ namespace Level
     public class Patterns
     {
         public List<int> enemyNB = new List<int>();
+        public List<string> enemyType = new List<string>();
         public List<int> enemyLife = new List<int>();
         public List<string> enemyPattern = new List<string>();
         public List<string> enemyWeapon = new List<string>();

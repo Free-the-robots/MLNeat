@@ -38,7 +38,7 @@ public class ParticlePooling : MonoBehaviour
         }
     }
 
-    public GameObject instantiate(Vector3 position, NEAT.Person part, bool damaging = false, bool flip = false)
+    public GameObject instantiate(Transform transform, NEAT.Person part, bool damaging = false)
     {
         GameObject res = null;
         if(pool.Count > 0)
@@ -46,14 +46,10 @@ public class ParticlePooling : MonoBehaviour
             res = pool[pool.Count - 1];
             pool.RemoveAt(pool.Count - 1);
             res.transform.parent = activesTransform;
-            res.transform.position = position;
+            res.transform.position = transform.position;
+            res.transform.rotation = transform.rotation;
             res.GetComponent<Particle>().weapon = part;
             res.GetComponent<Particle>().pool = this;
-
-            if (flip)
-                res.GetComponent<Particle>().scale = -1f;
-            else
-                res.GetComponent<Particle>().scale = 1f;
 
             res.GetComponent<Particle>().damaging = damaging;
             res.GetComponent<Particle>().enabled = true;
