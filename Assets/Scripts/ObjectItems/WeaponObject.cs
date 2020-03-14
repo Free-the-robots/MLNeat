@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponObject : MonoBehaviour
+public class WeaponObject : ObjectItem
 {
     public NEAT.Person contained;
 
+    private void Start()
+    {
+        StartBehaviour();
+    }
     // Update is called once per frame
-    float t = 0f;
     void Update()
     {
-        t += Time.deltaTime;
-        GetComponent<Rigidbody>().velocity = (new Vector3(Mathf.Sin(t)*2, 0f, -3));
+        UpdateBehaviour();
     }
 
     private void OnTriggerEnter(Collider other)

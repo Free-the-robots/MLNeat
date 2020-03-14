@@ -5,15 +5,12 @@ using UnityEngine;
 public class Particle : MonoBehaviour
 {
     public NEAT.Person weapon;
+    public string shooterTag = "";
     private Rigidbody body;
     private List<float> inputs = new List<float>(4) { 0f, 0f, 0f, 1f };
 
-    public ParticlePooling pool;
-
     private Vector3 initPos;
     public float lifeTime = 5f;
-
-    public bool damaging = false;
 
 
     float t = 0f;
@@ -48,22 +45,20 @@ public class Particle : MonoBehaviour
 
         if (t > lifeTime)
         {
-            pool.destroy(this.gameObject);
+            ParticlePooling.Instance.destroy(this.gameObject);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<PlayerController>() != null)
+        if (other.tag != shooterTag)
         {
-            if (damaging)
+            if (other.GetComponent<PlayerController>() != null)
             {
                 other.GetComponent<PlayerController>().loseHealth(10);
                 GameObject.Destroy(this.gameObject);
             }
-        }else if(other.GetComponent<EnemyController>() != null)
-        {
-            if (!damaging)
+            else if(other.GetComponent<EnemyController>() != null)
             {
                 other.GetComponent<EnemyController>().loseHealth(10);
                 GameObject.Destroy(this.gameObject);

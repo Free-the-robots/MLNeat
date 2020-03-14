@@ -16,12 +16,12 @@
                 "Enemy"
             ],
             "enemyLife": [
-                100,
-                100,
-                100,
-                100,
-                100,
-                100
+                10,
+                10,
+                10,
+                10,
+                10,
+                10
             ],
             "enemyPattern": [
                 "Pattern1"
@@ -78,10 +78,10 @@
                 "EnemyTurning"
             ],
             "enemyLife": [
-                100,
-                100,
-                100,
-                100
+                30,
+                30,
+                30,
+                30
             ],
             "enemyPattern": [
                 "Pattern1"
@@ -126,8 +126,8 @@
                 "Enemy"
             ],
             "enemyLife": [
-                100,
-                100
+                10,
+                10
             ],
             "enemyPattern": [
                 "Pattern2"
@@ -160,8 +160,8 @@
                 "Enemy"
             ],
             "enemyLife": [
-                100,
-                100
+                10,
+                10
             ],
             "enemyPattern": [
                 "Pattern2"
@@ -194,8 +194,8 @@
                 "EnemyTurning"
             ],
             "enemyLife": [
-                100,
-                100
+                10,
+                10
             ],
             "enemyPattern": [
                 "PatternStraight"
@@ -228,8 +228,8 @@
                 "EnemyTwoShooters"
             ],
             "enemyLife": [
-                100,
-                100
+                10,
+                10
             ],
             "enemyPattern": [
                 "PatternStraight"

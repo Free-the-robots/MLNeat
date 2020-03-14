@@ -14,7 +14,10 @@ namespace GA.Selection
             int crossoverCount = (int)(crossovers * size) - eliteSize;
             for(int i = 0; i < crossoverCount; ++i)
             {
-                int index = fitnesses.FindIndex(f => (f / sumFit) >= UnityEngine.Random.value);
+                double sum = 0;
+                List<double> cumulatedSum = fitnesses.Select(f => sum += f / sumFit).ToList();
+                float r = UnityEngine.Random.value;
+                int index = cumulatedSum.FindIndex(f => f > r);
                 if (index == -1)
                     index = 0;
 
@@ -23,7 +26,11 @@ namespace GA.Selection
             int mutationCount = size - crossoverCount - eliteSize;
             for (int i = 0; i < mutationCount; ++i)
             {
-                int index = fitnesses.FindIndex(f => (f / sumFit) >= UnityEngine.Random.value);
+                double sum = 0;
+                List<double> cumulatedSum = fitnesses.Select(f => sum += f / sumFit).ToList();
+
+                float r = UnityEngine.Random.value;
+                int index = cumulatedSum.FindIndex(f => f > r);
                 if (index == -1)
                     index = 0;
 
@@ -47,7 +54,11 @@ namespace GA.Selection
             int crossoverCount = (int)(crossovers * size) - eliteSize;
             for (int i = 0; i < crossoverCount; ++i)
             {
-                int index = fitnesses.FindIndex(f => (f / sumFit) >= UnityEngine.Random.value);
+                double sum = 0;
+                List<double> cumulatedSum = fitnesses.Select(f => sum += f / sumFit).ToList();
+
+                float r = UnityEngine.Random.value;
+                int index = cumulatedSum.FindIndex(f => f > r);
                 if (index == -1)
                     index = 0;
 
@@ -60,7 +71,11 @@ namespace GA.Selection
             int mutationCount = size - crossoverCount - eliteSize;
             for (int i = 0; i < mutationCount; ++i)
             {
-                int index = fitnesses.FindIndex(f => (f / sumFit) >= UnityEngine.Random.value);
+                double sum = 0;
+                List<double> cumulatedSum = fitnesses.Select(f => sum += f / sumFit).ToList();
+
+                float r = UnityEngine.Random.value;
+                int index = cumulatedSum.FindIndex(f => f > r);
                 if (index == -1)
                     index = 0;
 

@@ -38,7 +38,7 @@ public class ParticlePooling : MonoBehaviour
         }
     }
 
-    public GameObject instantiate(Transform transform, NEAT.Person part, bool damaging = false)
+    public GameObject instantiate(string tag, Transform transform, NEAT.Person part)
     {
         GameObject res = null;
         if(pool.Count > 0)
@@ -49,9 +49,8 @@ public class ParticlePooling : MonoBehaviour
             res.transform.position = transform.position;
             res.transform.rotation = transform.rotation;
             res.GetComponent<Particle>().weapon = part;
-            res.GetComponent<Particle>().pool = this;
+            res.GetComponent<Particle>().shooterTag = tag;
 
-            res.GetComponent<Particle>().damaging = damaging;
             res.GetComponent<Particle>().enabled = true;
             res.SetActive(true);
         }

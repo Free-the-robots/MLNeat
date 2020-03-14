@@ -5,7 +5,7 @@ using System.IO;
 
 public class LevelManager : MonoBehaviour
 {
-
+    public GameEventTransform deadEnemy;
     private static LevelManager instance;
 
     public static LevelManager Instance { get { return instance; } }
@@ -144,6 +144,8 @@ public class LevelManager : MonoBehaviour
                 {
                     GameObject gb = GameObject.Instantiate(Resources.Load<GameObject>("Enemies/" + level.patterns[steps].enemyType[0]));
                     EnemyController enemyController = gb.GetComponent<EnemyController>();
+                    enemyController.enemyDead = deadEnemy;
+
                     enemyController.flippedX = level.patterns[steps].enemyFlipped[i];
                     enemyController.offset = level.patterns[steps].enemyOffset[i];
                     enemyController.life = level.patterns[steps].enemyLife[i];

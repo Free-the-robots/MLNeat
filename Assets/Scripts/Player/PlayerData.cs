@@ -9,4 +9,16 @@ public class PlayerData : ScriptableObject
     public float lifeMax;
 
     public float speed;
+
+    public float freq;
+
+    public PlayerData Clone()
+    {
+        PlayerData res = ScriptableObject.CreateInstance<PlayerData>();
+        res.life = life;
+        res.lifeMax = lifeMax;
+        res.speed = speed;
+        res.freq = freq;
+        return res;
+    }
 }

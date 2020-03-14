@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public GameEventTransform enemyDead;
     public NEAT.Person weapon;
     public EnemyPattern pattern;
     public Vector3 offset;
@@ -104,7 +105,7 @@ public class EnemyController : MonoBehaviour
                 periodOn = 0;
             }
             for(int i = 0; i < shooters.Count; ++i)
-                ParticlePooling.Instance.instantiate(shooters[i], weapon, true);
+                ParticlePooling.Instance.instantiate(this.tag, shooters[i], weapon);
 
             periodOn++;
         }
@@ -123,6 +124,7 @@ public class EnemyController : MonoBehaviour
         life -= health;
         if(life <= 0)
         {
+            enemyDead.Raise(this.transform);
             GameObject.Destroy(this.gameObject);
         }
     }
