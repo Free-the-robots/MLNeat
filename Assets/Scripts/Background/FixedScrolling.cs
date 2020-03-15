@@ -16,6 +16,6 @@ public class FixedScrolling : MonoBehaviour
 
     void Update()
     {
-        theCamera.position = new Vector3(theCamera.position.x + theScrollSpeed, theCamera.position.y + theScrollSpeed, theCamera.position.z);
+        theCamera.position = new Vector3(theCamera.position.x + theScrollSpeed, theCamera.position.y /*+ theScrollSpeed*/, theCamera.position.z + theScrollSpeed);
     }
 }

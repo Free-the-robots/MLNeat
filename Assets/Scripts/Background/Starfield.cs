@@ -26,6 +26,7 @@ public class Starfield : MonoBehaviour
 
     void Awake()
     {
+        //Transform goParent = this.transform.parent;
         Stars = new ParticleSystem.Particle[MaxStars];
         Particles = GetComponent<ParticleSystem>(); 
         theCamera = Camera.main.transform;
