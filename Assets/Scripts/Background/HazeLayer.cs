@@ -7,10 +7,10 @@ public class HazeLayer : MonoBehaviour
 {
     public float ParallaxFactor = 0f;
 
-    Transform theCamera;
-    Vector3 theDimension;
+    private Transform theCamera;
+    private Vector3 theDimension;
 
-    Vector3 theStartPosition;
+    private Vector3 theStartPosition;
 
     void Start()
     {

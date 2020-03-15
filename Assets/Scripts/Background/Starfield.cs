@@ -14,14 +14,14 @@ public class Starfield : MonoBehaviour
     public float LayerFactor = 0f;
 
 
-    float xOffset;
+    private float xOffset;
 
-    float yOffset;
+    private float yOffset;
 
-    ParticleSystem Particles;
-    ParticleSystem.Particle[] Stars;
+    private ParticleSystem Particles;
+    private ParticleSystem.Particle[] Stars;
 
-    Transform theCamera;
+    private Transform theCamera;
 
 
     void Awake()
@@ -41,7 +41,7 @@ public class Starfield : MonoBehaviour
             float randSize = Random.Range(StarSizeRange, StarSizeRange + 1f);                       // Randomize star size within parameters
             float scaledColor = (true == Colorize) ? randSize - StarSizeRange : 1f;         // If coloration is desired, color based on size
 
-            Stars[i].position = GetRandomInRectangle(FieldWidth, FieldHeight) + transform.position;
+            Stars[i].position = /*Quaternion.AngleAxis(90, Vector3.down) * */(GetRandomInRectangle(FieldWidth, FieldHeight) + transform.position);
             Stars[i].startSize = StarSize * randSize;
             Stars[i].startColor = new Color(1f, scaledColor, scaledColor, 1f);
         }
@@ -85,9 +85,8 @@ public class Starfield : MonoBehaviour
     }
 
     // GetRandomInRectangle
-    //----------------------------------------------------------
     // Get a random value within a certain rectangle area
-    //
+    
     Vector3 GetRandomInRectangle(float width, float height)
     {
         float x = Random.Range(0, width);
