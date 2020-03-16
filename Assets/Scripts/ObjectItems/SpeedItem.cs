@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class SpeedItem : ObjectItem
 {
-    // Start is called before the first frame update
-    void Update()
+
+    protected override void Start()
     {
-        UpdateBehaviour();
+        base.Start();
+    }
+    // Start is called before the first frame update
+    protected override void Update()
+    {
+        base.Update();
     }
 
-    protected override void TriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {

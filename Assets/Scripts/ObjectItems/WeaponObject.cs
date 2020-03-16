@@ -6,17 +6,17 @@ public class WeaponObject : ObjectItem
 {
     public NEAT.Person contained;
 
-    private void Start()
+    protected override void Start()
     {
-        StartBehaviour();
+        base.Start();
     }
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        UpdateBehaviour();
+        base.Update();
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {

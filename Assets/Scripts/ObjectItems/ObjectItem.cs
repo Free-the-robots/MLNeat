@@ -6,35 +6,19 @@ public class ObjectItem : MonoBehaviour
 {
     protected float t = 0f;
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        StartBehaviour();
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        UpdateBehaviour();
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        TriggerEnter(other);
-    }
-
-    protected virtual void StartBehaviour()
-    {
-
-    }
-
-    protected virtual void UpdateBehaviour()
+    protected virtual void Update()
     {
         t += Time.deltaTime;
         GetComponent<Rigidbody>().velocity = (new Vector3(Mathf.Sin(t) * 2, 0f, -3));
     }
 
-    protected virtual void TriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        
     }
+
 }
