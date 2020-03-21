@@ -50,18 +50,33 @@ public class PlayerController : MonoBehaviour
 
         //if (Input.GetMouseButton(0))
         //{
-            if(t > 1F/playerData.freq)
+        if(t > 1F/playerData.freq)
+        {
+            for(int i = 0; i< drone.Count; ++i)
             {
-                for(int i = 0; i< drone.Count; ++i)
-                    ParticlePooling.Instance.instantiate(this.tag, drone[i], chosenW);
+                GameObject gb = ParticlePooling.Instance.instantiate(this.tag, drone[i], chosenW);
 
-                chosenW.usage++;
-                if (!usedWepons.Contains(chosenW))
+                Transform enPos = null;
+                float dist = 100000f;
+                foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
                 {
-                    usedWepons.Add(chosenW);
+                    if (dist > Vector3.Distance(enemy.transform.position, transform.position))
+                    {
+                        enPos = enemy.transform;
+                        dist = Vector3.Distance(enemy.transform.position, transform.position);
+                    }
+
                 }
-                t = 0f;
+                gb.GetComponent<ParticleHomingForce>().target = enPos;
             }
+
+            chosenW.usage++;
+            if (!usedWepons.Contains(chosenW))
+            {
+                usedWepons.Add(chosenW);
+            }
+            t = 0f;
+        }
         //}
 
         if (Input.GetMouseButtonDown(0))

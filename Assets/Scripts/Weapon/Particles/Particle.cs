@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Particle : MonoBehaviour
 {
-    public NEAT.Person weapon;
+    public NN.Net weapon;
     public string shooterTag = "";
     protected Rigidbody body;
     protected List<float> inputs = new List<float>(4) { 0f, 0f, 0f, 1f };
@@ -18,11 +18,7 @@ public class Particle : MonoBehaviour
     protected virtual void OnEnable()
     {
         body = GetComponent<Rigidbody>();
-        if (weapon != null)
-        {
-            if (weapon.network == null)
-                weapon.buildModel();
-        }
+
         initPos = transform.position;
 
         inputs[0] = (transform.position.z - initPos.z) / 10f;
@@ -35,18 +31,12 @@ public class Particle : MonoBehaviour
     // Update is called once per frame
     protected virtual void FixedUpdate()
     {
-        t += Time.deltaTime;
-        inputs[0] = ((transform.position.z - initPos.z) * 1f);
-        inputs[1] = ((transform.position.x - initPos.x) * 1f);
-        inputs[2] = (Vector3.Distance(initPos, transform.position));
-        List<float> res = weapon.network.evaluate(inputs);
-        Vector3 vel = (new Vector3(50f * res[1], 0f, 50f * res[0]));
-        body.velocity = transform.TransformDirection(vel);
+        evaluate();
 
-        if (t > lifeTime)
-        {
-            ParticlePooling.Instance.destroy(this.gameObject);
-        }
+        List<float> res = weapon.evaluate(inputs);
+        Vector3 vel = new Vector3(50f * res[1], 0f, 50f * res[0]);
+
+        apply(vel);
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -63,6 +53,24 @@ public class Particle : MonoBehaviour
                 other.GetComponent<EnemyController>().loseHealth(10);
                 GameObject.Destroy(this.gameObject);
             }
+        }
+    }
+
+    protected virtual void evaluate()
+    {
+        t += Time.deltaTime;
+        inputs[0] = ((transform.position.z - initPos.z) * 1f);
+        inputs[1] = ((transform.position.x - initPos.x) * 1f);
+        inputs[2] = (Vector3.Distance(initPos, transform.position));
+    }
+
+    protected virtual void apply(Vector3 vel)
+    {
+        body.velocity = transform.TransformDirection(vel);
+
+        if (t > lifeTime)
+        {
+            ParticlePooling.Instance.destroy(this.gameObject);
         }
     }
 }

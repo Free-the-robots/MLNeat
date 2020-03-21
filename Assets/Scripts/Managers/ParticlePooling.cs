@@ -48,7 +48,9 @@ public class ParticlePooling : MonoBehaviour
             res.transform.parent = activesTransform;
             res.transform.position = transform.position;
             res.transform.rotation = transform.rotation;
-            res.GetComponent<Particle>().weapon = part;
+            if (part.network == null)
+                part.buildModel();
+            res.GetComponent<Particle>().weapon = part.network;
             res.GetComponent<Particle>().shooterTag = tag;
 
             res.GetComponent<Particle>().enabled = true;

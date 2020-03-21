@@ -15,4 +15,4 @@ MonoBehaviour:
   life: 750
   lifeMax: 1000
   speed: 20
-  freq: 2
+  freq: 3
