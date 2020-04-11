@@ -227,12 +227,12 @@ GameObject:
   - component: {fileID: 65709543}
   - component: {fileID: 65709542}
   - component: {fileID: 65709541}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LightStrip (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967294
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!65 &65709541
 BoxCollider:
@@ -265,7 +265,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6f4fafbe88efc4f6ca71cc8df8fe0473, type: 2}
+  - {fileID: 2100000, guid: 3b6aa8bb3d4524ac68f80ef241b04e0e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1062,12 +1062,12 @@ GameObject:
   - component: {fileID: 537167130}
   - component: {fileID: 537167129}
   - component: {fileID: 537167128}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LightStrip (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967294
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!65 &537167128
 BoxCollider:
@@ -1100,7 +1100,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6f4fafbe88efc4f6ca71cc8df8fe0473, type: 2}
+  - {fileID: 2100000, guid: 3b6aa8bb3d4524ac68f80ef241b04e0e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1155,7 +1155,9 @@ GameObject:
   - component: {fileID: 821345786}
   - component: {fileID: 821345785}
   - component: {fileID: 821345784}
-  m_Layer: 0
+  - component: {fileID: 821345787}
+  - component: {fileID: 821345788}
+  m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -1221,12 +1223,89 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 821345783}
   m_LocalRotation: {x: 0.37266803, y: 0.1781769, z: -0.073148325, w: 0.907756}
-  m_LocalPosition: {x: -7.42, y: 6.04, z: -0.27}
+  m_LocalPosition: {x: -0.18, y: 1.58, z: 8.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 44.64, y: 22.21, z: 0}
+--- !u!114 &821345787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821345783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 821345786}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 0
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
+--- !u!114 &821345788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821345783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 924d6edf12d174ee18a71c80e4ad59d4, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &920722381
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,12 +1721,12 @@ GameObject:
   - component: {fileID: 1146313515}
   - component: {fileID: 1146313514}
   - component: {fileID: 1146313513}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LightStrip (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967294
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!65 &1146313513
 BoxCollider:
@@ -1680,7 +1759,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6f4fafbe88efc4f6ca71cc8df8fe0473, type: 2}
+  - {fileID: 2100000, guid: 3b6aa8bb3d4524ac68f80ef241b04e0e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2143,12 +2222,12 @@ GameObject:
   - component: {fileID: 1402826823}
   - component: {fileID: 1402826822}
   - component: {fileID: 1402826821}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LightStrip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967294
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!65 &1402826821
 BoxCollider:
@@ -2181,7 +2260,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6f4fafbe88efc4f6ca71cc8df8fe0473, type: 2}
+  - {fileID: 2100000, guid: 1a1a07e775e01485c9d453d2f1383f9b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2839,12 +2918,12 @@ GameObject:
   - component: {fileID: 1838054211}
   - component: {fileID: 1838054210}
   - component: {fileID: 1838054209}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LightStrip (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967294
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!65 &1838054209
 BoxCollider:
@@ -2877,7 +2956,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6f4fafbe88efc4f6ca71cc8df8fe0473, type: 2}
+  - {fileID: 2100000, guid: 3b6aa8bb3d4524ac68f80ef241b04e0e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3026,12 +3105,12 @@ GameObject:
   - component: {fileID: 1983901552}
   - component: {fileID: 1983901551}
   - component: {fileID: 1983901550}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LightStrip (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967294
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!65 &1983901550
 BoxCollider:
@@ -3064,7 +3143,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6f4fafbe88efc4f6ca71cc8df8fe0473, type: 2}
+  - {fileID: 2100000, guid: 3b6aa8bb3d4524ac68f80ef241b04e0e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
