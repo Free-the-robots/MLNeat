@@ -27,8 +27,8 @@ public class ParticleHomingForce : ParticleForce
         apply(vel);
     }
 
-    protected override void OnTriggerEnter(Collider other)
+    protected override void OnCollisionEnter(Collision other)
     {
-        base.OnTriggerEnter(other);
+        base.OnCollisionEnter(other);
     }
 }

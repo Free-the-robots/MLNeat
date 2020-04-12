@@ -21,9 +21,9 @@ public class ParticleOffset : Particle
         apply(vel);
     }
 
-    protected override void OnTriggerEnter(Collider other)
+    protected override void OnCollisionEnter(Collision other)
     {
-        base.OnTriggerEnter(other);
+        base.OnCollisionEnter(other);
     }
 
     protected override void apply(Vector3 vel)

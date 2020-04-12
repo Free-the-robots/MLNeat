@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class spawnLight : MonoBehaviour
 {
-    public GameObject light;
+    public GameObject lightGB;
     //List<Transform> listT = new List<Transform>(50);
     // Start is called before the first frame update
     void Start()
     {
         for(int i = 0; i < 50; ++i)
         {
-            GameObject gb = GameObject.Instantiate(light,transform,true);
+            GameObject gb = GameObject.Instantiate(lightGB, transform,true);
             gb.GetComponent<lightSpawned>().i = i;
             //listT.Add(gb.transform);
         }

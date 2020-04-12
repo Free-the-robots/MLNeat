@@ -17,13 +17,13 @@ public class ParticleForce : Particle
         evaluate();
 
         List<float> res = weapon.evaluate(inputs);
-        Vector3 vel = (new Vector3(res[1], 0f, res[0]) + forceFront) * 50f;
+        Vector3 vel = (new Vector3(res[1], 0f, res[0]) + forceFront) * 4f;
 
         apply(vel);
     }
 
-    protected override void OnTriggerEnter(Collider other)
+    protected override void OnCollisionEnter(Collision other)
     {
-        base.OnTriggerEnter(other);
+        base.OnCollisionEnter(other);
     }
 }

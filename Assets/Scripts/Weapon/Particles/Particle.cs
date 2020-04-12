@@ -39,19 +39,24 @@ public class Particle : MonoBehaviour
         apply(vel);
     }
 
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnCollisionEnter(Collision other)
     {
-        if (other.tag != shooterTag)
+        if (other.transform.tag != shooterTag)
         {
-            if (other.GetComponent<PlayerController>() != null)
+            if (other.transform.GetComponent<PlayerController>() != null)
             {
-                other.GetComponent<PlayerController>().loseHealth(10);
+                other.transform.GetComponent<PlayerController>().loseHealth(10);
                 GameObject.Destroy(this.gameObject);
             }
-            else if (other.GetComponent<EnemyController>() != null)
+            else if (other.transform.GetComponent<EnemyController>() != null)
             {
-                other.GetComponent<EnemyController>().loseHealth(10);
+                other.transform.GetComponent<EnemyController>().loseHealth(10);
                 GameObject.Destroy(this.gameObject);
+            }
+
+            if (other.transform.tag.Equals("Obstacles"))
+            {
+                transform.forward = Vector3.Reflect(transform.forward,other.GetContact(0).normal);
             }
         }
     }
@@ -67,6 +72,7 @@ public class Particle : MonoBehaviour
     protected virtual void apply(Vector3 vel)
     {
         body.velocity = transform.TransformDirection(vel);
+        //body.velocity = transform.forward * 5f;
 
         if (t > lifeTime)
         {
