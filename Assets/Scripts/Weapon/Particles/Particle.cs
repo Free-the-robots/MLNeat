@@ -21,8 +21,8 @@ public class Particle : MonoBehaviour
 
         initPos = transform.position;
 
-        inputs[0] = (transform.position.z - initPos.z) / 10f;
-        inputs[1] = (transform.position.x - initPos.x) / 10f;
+        inputs[0] = 0f;
+        inputs[1] = 0f;
         inputs[2] = Vector3.Distance(initPos, transform.position);
         inputs[3] = 1f;
 
@@ -64,8 +64,9 @@ public class Particle : MonoBehaviour
     protected virtual void evaluate()
     {
         t += Time.deltaTime;
-        inputs[0] = ((transform.position.z - initPos.z) * 1f);
-        inputs[1] = ((transform.position.x - initPos.x) * 1f);
+        Vector3 pos = transform.InverseTransformDirection(transform.position - initPos);
+        inputs[0] = pos.z * 1f;
+        inputs[1] = pos.x * 1f;
         inputs[2] = (Vector3.Distance(initPos, transform.position));
     }
 
