@@ -10,7 +10,7 @@ public class Particle : MonoBehaviour
     protected List<float> inputs = new List<float>(4) { 0f, 0f, 0f, 1f };
 
     protected Vector3 initPos;
-    public float lifeTime = 5f;
+    public float lifeTime = 1f;
 
 
     protected float t = 0f;
@@ -34,7 +34,7 @@ public class Particle : MonoBehaviour
         evaluate();
 
         List<float> res = weapon.evaluate(inputs);
-        Vector3 vel = new Vector3(50f * res[1], 0f, 50f * res[0]);
+        Vector3 vel = new Vector3(res[1], 0f, res[0]) * 50f;
 
         apply(vel);
     }
@@ -72,7 +72,6 @@ public class Particle : MonoBehaviour
     protected virtual void apply(Vector3 vel)
     {
         body.velocity = transform.TransformDirection(vel);
-        //body.velocity = transform.forward * 5f;
 
         if (t > lifeTime)
         {

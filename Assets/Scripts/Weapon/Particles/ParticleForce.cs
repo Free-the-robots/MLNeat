@@ -17,7 +17,7 @@ public class ParticleForce : Particle
         evaluate();
 
         List<float> res = weapon.evaluate(inputs);
-        Vector3 vel = (new Vector3(res[1], 0f, res[0]) + forceFront) * 4f;
+        Vector3 vel = (new Vector3(res[1], 0f, res[0]) + forceFront) * 8f;
 
         apply(vel);
     }
