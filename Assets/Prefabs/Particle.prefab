@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2541924581613321175}
   - component: {fileID: 2615139674172841826}
   - component: {fileID: 5242054224074058931}
-  - component: {fileID: 29149192148635214}
   - component: {fileID: 2513675452980853025}
+  - component: {fileID: -4627319972715445843}
   m_Layer: 10
   m_Name: Particle
   m_TagString: Particle
@@ -98,20 +98,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &29149192148635214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4232605324814160302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37f9ebf4d12336b4c85624d744c47a46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shooterTag: 
-  lifeTime: 1
 --- !u!135 &2513675452980853025
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -125,3 +111,17 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4627319972715445843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4232605324814160302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37f9ebf4d12336b4c85624d744c47a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shooterTag: 
+  lifeTime: 1

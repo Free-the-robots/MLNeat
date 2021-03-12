@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
                     }
 
                 }
-                gb.GetComponent<ParticleHomingForce>().target = enPos;
+                //gb.GetComponent<ParticleHomingForce>().target = enPos;
             }
 
             chosenW.usage++;
